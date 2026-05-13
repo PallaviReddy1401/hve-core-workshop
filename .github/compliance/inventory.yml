@@ -1,0 +1,10 @@
+inventory:
+- source: DirectOwners
+  items:
+  - id: sapsing@microsoft.com
+  - id: asalaskar@microsoft.com
+  - id: prkushwa@microsoft.com
+  - id: brsingh@microsoft.com
+  - id: jahanarunj@microsoft.com
+  - id: jkulkarni@microsoft.com
+  isProduction: false
