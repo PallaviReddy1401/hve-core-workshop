@@ -28,19 +28,16 @@ Clear context between phases — open a new chat session.
 
 ### Step 2: Attach Your Artifacts
 
-Add these files to the chat context:
+Add the prd document to the chat context:
 
-- `docs/prd.md` — your PRD
-- `docs/decisions/` — your ADRs from Challenge 3
+- `docs/prds/<your-prd>.md` — your PRD
 
 ### Step 3: Invoke the GitHub Backlog Manager
 
 Select the **GitHub Backlog Manager** agent, then use this prompt:
 
 ```
-Discover issues from this PRD and the attached ADRs. Create a GitHub backlog for the SmartAssist project.
-
-Repository: <your-github-username>/smartassist-agent
+Discover issues from the attached PRD. Create a GitHub backlog for the SmartAssist project.
 
 Use the research findings and architecture decisions to inform issue structure. Create epics as parent issues and user stories as sub-issues.
 
