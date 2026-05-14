@@ -1,0 +1,72 @@
+Meeting 02: Technical and Security Review
+
+Session Details
+
+Date: 2026-02-05
+Duration: 70 minutes
+Attendees: Marcus (Head of Engineering), James (CISO), Lin (CTO)
+Facilitator notes: Follow-up session focused on technical constraints for the minimal MVP and deferral of compliance and integration work.
+
+Transcript
+
+Facilitator: Today is about technical constraints for the MVP. We want to understand what is in scope for the first 8 weeks and what gets deferred.
+
+Marcus: I will start with a strong preference. We are a Python shop. I do not want another JavaScript-heavy stack showing up in support infrastructure unless there is no alternative. And whatever we build needs to integrate with our existing ticketing system via REST APIs.
+
+Lin: That is consistent with how I want to approach it. Current stack is Python 3.11, Azure. Keep the MVP aligned with that.
+
+Marcus: Good. Now, I know we need to eventually integrate with Zendesk, Stripe, and Confluence, but where does that sit relative to MVP?
+
+Lin: All of that is deferred. The MVP is a REST API with query classification and three specialized agents. No external system integrations in the first phase.
+
+Marcus: That simplifies things a lot. So the billing agent in MVP is answering from its own knowledge and prompt context, not pulling live account data from Stripe?
+
+Lin: Correct. The billing agent handles general billing and payment questions using its instructions and any context provided in the conversation. Live account lookups come later.
+
+James: That actually addresses some of my initial concerns. If the MVP is not connecting to production billing systems, the risk surface is much smaller.
+
+Facilitator: James, what are your non-negotiables even for a minimal MVP?
+
+James: Azure-hosted only. No third-party AI providers outside our Azure tenant. That is a hard line regardless of phase. Beyond that, my full requirements are no customer PII stored in conversation logs, all data in transit encrypted, and we need audit trails. We must comply with SOC2 and GDPR.
+
+Lin: Already the plan. We have Azure Foundry provisioned and Azure OpenAI deployments in the tenant.
+
+James: Good. For the MVP specifically, I accept that full SOC2 and GDPR compliance, PII redaction, and formal audit trails are post-MVP work. But I want us to design in a way that does not make those harder to add later.
+
+Marcus: That is reasonable. We should keep conversation state isolated per session so that when we do add privacy controls, we have clean boundaries to work with.
+
+Lin: Agreed. The MVP uses file-based or in-memory local storage for conversation history. No external database. That naturally limits the blast radius.
+
+Marcus: Separate state per session is critical even for MVP. The system has to handle simultaneous conversations without mixing context. No accidental bleed between users.
+
+Lin: Yes. Each conversation session gets its own context. That is a basic correctness requirement, not a compliance feature.
+
+Facilitator: What about observability?
+
+Marcus: I want observability. We need to know when things go wrong before customers tell us. But for MVP I can accept basic logging. Dashboards, alerts on tool failure rates, resolution metrics, that all comes later.
+
+Lin: Right. The MVP just needs to work correctly. The REST API accepts a message, classifies it, routes to the right agent, and returns a response. We keep it simple.
+
+Marcus: On billing specifically, even without live data, I want a clean rule: the billing agent should not hallucinate. If it does not know, it should say so.
+
+James: Agreed. The AI must never fabricate billing information. That rule applies in every phase.
+
+Lin: This is exactly why billing is a specialized agent with its own instructions rather than part of a generic question-answering path.
+
+Facilitator: Any decisions on architecture shape?
+
+Lin: Minimal for MVP. A classifier that categorizes queries into billing, tech-support, or general. Three agents, one per category. A REST API layer in front. In-memory or file-based conversation storage. That is the full stack.
+
+Marcus: Good. No over-engineering. We can add modular plugin interfaces and integration contracts in the next phase.
+
+James: And when we do get to compliance, the clean session isolation from MVP will make that work easier.
+
+Open Notes
+
+- Python 3.11 on Azure is the MVP stack. No new infrastructure.
+- No external integrations in MVP. Zendesk, Stripe, and Confluence are deferred to post-MVP.
+- Azure Foundry and Azure OpenAI inside the tenant are mandatory even for MVP.
+- Conversation state is isolated per session using file-based or in-memory storage.
+- James requires no customer PII in conversation logs, encrypted data in transit, audit trails, and SOC2/GDPR compliance for the full system. All deferred to post-MVP.
+- Marcus requires integration with existing ticketing system via REST APIs and observability to detect issues before customers report them. Both deferred to post-MVP.
+- Billing agent must not fabricate information, even without live account data access.

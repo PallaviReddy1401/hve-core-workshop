@@ -1,0 +1,77 @@
+Meeting 01: Executive and Product Kickoff
+
+Session Details
+
+Date: 2026-02-03
+Duration: 55 minutes
+Attendees: Sarah (VP Customer Success), Priya (Product Manager), Lin (CTO)
+Facilitator notes: First discovery session focused on business outcomes, customer pain points, and defining a minimal MVP.
+
+Transcript
+
+Facilitator: Thanks, everyone. The goal today is to understand what problem SmartAssist needs to solve and what the MVP should look like.
+
+Sarah: The blunt version is that support is overwhelmed. We are crossing 2,000 tickets a day now, and the team is underwater. CSAT dropped to 3.2 out of 5 last quarter, which is not acceptable. And whatever we build, it cannot feel like a typical chatbot. Customers hate chatbots. The AI should feel natural, not robotic. This needs to be different from the scripted bots everyone has tried and abandoned.
+
+Priya: Do we know what is driving the volume, or is it spread evenly?
+
+Sarah: It is not even. Billing is the biggest bucket. Then technical troubleshooting. General account and product questions after that.
+
+Priya: I pulled a rough breakdown from our support dashboards yesterday. Billing looks like about 40 percent. Technical troubleshooting is around 35 percent. General questions are 20 percent. The remaining 5 percent are cases that clearly need a human. And each category needs different expertise. Billing questions need access to account data. Technical issues need our knowledge base. The system should know when it is out of its depth and hand off gracefully.
+
+Lin: That split is useful. It suggests we should not think of this as one generic bot. Different issue types need different handling.
+
+Sarah: Agree. But given the timeline pressure, what can we realistically ship in 8 weeks?
+
+Priya: I think the MVP has to be deliberately minimal. A REST API that accepts a user message and returns an AI-generated response. The system classifies the query as billing, tech-support, or general, and routes it to a dedicated agent for each category.
+
+Lin: That is reasonable. Three specialized agents with a classifier in front. No UI layer in MVP. And I want the architecture to be modular. We should be able to add new specialized agents easily. Next quarter we want to add a returns and refund agent and a proactive outreach agent. Think modular from the start.
+
+Sarah: No web widget at all?
+
+Priya: Not for MVP. The API is the product. A frontend team or integration partner can build on top of it, but we should not take on chat widget development in the first 8 weeks.
+
+Sarah: I can live with that if the API is solid and actually useful. What about when the AI cannot handle something?
+
+Priya: For MVP, we return a clear indication that human escalation is needed. No live handoff, no routing to a human queue. Just a flag in the response saying this needs a person.
+
+Sarah: That is a significant cut. Diego will push back on that.
+
+Lin: It is the right call for 8 weeks. Building a real-time handoff system with context transfer is easily a quarter of work on its own. We can add it in the next phase.
+
+Priya: Exactly. The MVP scope should be: a REST API for chat, query classification and routing to three agents, multi-turn conversation context within a session, and a simple escalation indicator. That is it.
+
+Facilitator: What about storage? Database?
+
+Lin: No external database for MVP. We can use file-based or in-memory local storage for conversation history. Keep the infrastructure minimal so the team can focus on the AI behavior.
+
+Priya: Agreed. In-memory or file-based is fine for now. We are not building for production scale in the first release.
+
+Sarah: And the 70 percent resolution target?
+
+Priya: That is a strategic goal for the mature system, not the MVP acceptance criterion. We should design toward it, but the MVP just needs to demonstrate that classification and routing work and that the agents can handle common queries.
+
+Lin: From the platform side, we already have Azure Foundry and Azure OpenAI deployments inside our tenant. The MVP should use those. Python 3.11. No new infrastructure.
+
+Priya: Let me explicitly list what is out of MVP scope so there is no confusion. Web chat widget, email or async channels, live human-agent handoff, agent-assist features, external integrations like Zendesk or Stripe, PII redaction and compliance work, analytics dashboards, and any additional agents like returns or proactive outreach.
+
+Lin: That is a long list of deferrals, but it is the right list. We can plan those for the 16-week full launch.
+
+Sarah: Fine. As long as the MVP proves the concept works and the architecture supports adding those things later.
+
+Facilitator: Anything else we need on record before the next session?
+
+Priya: Budget is consumption-based on Azure, so we do not have a hard spend cap for MVP. Team-wise we have four backend engineers, one ML engineer, and one DevOps engineer.
+
+Lin: Which means we need to stay pragmatic. Python-first, use the Azure assets we already have, and keep scope to what we listed today.
+
+Open Notes
+
+- MVP is deliberately minimal: REST API, query classification, three specialized agents, multi-turn context, and escalation indication.
+- No UI layer, no live handoff, no external integrations, no analytics in MVP.
+- Storage is file-based or in-memory. No external database for MVP.
+- The 70 percent automated resolution target is a strategic goal for the mature system, not an MVP criterion.
+- Sarah emphasized the AI must feel natural and not robotic. Customers hate chatbots.
+- Architecture should be modular to support adding new agents easily. Returns/refund and proactive outreach agents planned for next quarter.
+- Each query category needs different expertise: billing needs account data, tech support needs the knowledge base.
+- All deferred items are planned for the 16-week full launch phase.

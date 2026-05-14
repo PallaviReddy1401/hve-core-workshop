@@ -1,0 +1,75 @@
+Meeting 03: Support Operations and UX Workflow Review
+
+Session Details
+
+Date: 2026-02-07
+Duration: 65 minutes
+Attendees: Diego (Support Team Lead), Aisha (UX Designer), Sarah (VP Customer Success), Priya (Product Manager)
+Facilitator notes: Session focused on aligning support and UX expectations with the minimal MVP scope defined in earlier sessions.
+
+Transcript
+
+Facilitator: We have business goals and technical constraints nailed down. Today I want to align on what the MVP means for support operations and customer experience.
+
+Diego: The first thing I care about is handoff quality. When the AI escalates a case, my team needs the conversation history. Customers get furious when they have to repeat themselves.
+
+Priya: I hear you, Diego, but I need to set expectations. The MVP does not include live human-agent handoff. When the AI cannot resolve something, the API returns a clear escalation indicator in the response. There is no automated routing to a human queue or context transfer in this phase.
+
+Diego: That is a pretty big limitation. So what happens when the system hits its limits?
+
+Priya: The response includes a flag that says escalation is needed. Whatever system consumes the API can decide how to handle that, whether it creates a ticket, alerts a person, or something else. But building that workflow is not part of the MVP.
+
+Sarah: I know it is not ideal, but the alternative is spending weeks on handoff infrastructure and shipping nothing. The MVP proves the AI can classify and respond to the three main categories. Handoff comes next.
+
+Diego: What about agent-assist? Can the system at least suggest draft responses for my team on the tricky cases? That would be a huge productivity boost. And we need analytics. Which topics are trending, what is the AI's resolution rate, average handling time. My team needs that visibility.
+
+Priya: That is also post-MVP. The first release is purely the AI responding to customers through the API. Agent-assist suggestions, analytics dashboards, trending topics, resolution rate tracking, all of that is planned for the full launch phase.
+
+Diego: So for my team, the MVP does not change our day-to-day workflow at all?
+
+Priya: Not directly. The MVP validates that the classification and routing work, that the agents can handle common queries across billing, tech support, and general questions, and that the system maintains multi-turn conversation context. Your team benefits once we add handoff and agent-assist on top of that foundation.
+
+Sarah: Think of the MVP as proving the engine works. The dashboard and the steering wheel come in the next phase.
+
+Aisha: On the customer experience side, I originally wanted the assistant to support both a chat widget and asynchronous email-style messaging.
+
+Priya: Both are out of MVP scope. There is no UI layer at all. The MVP is a REST API. A frontend team can build a widget on top of it later.
+
+Aisha: That is fine for the first phase. But can we at least make sure the API supports multi-turn context so that when we do add a UI, conversations feel continuous?
+
+Priya: Yes. Multi-turn conversation context within a session is part of the MVP. The API maintains context across exchanges in the same session.
+
+Aisha: Good. That is the critical foundation. Without that, any future UI would feel like one-shot Q and A.
+
+Sarah: Even without a UI, the responses should still be concise and clear. If someone is testing the API or building on top of it, the quality of the responses matters.
+
+Aisha: Agreed. Responses need to be concise but complete. And the agents should ask clarifying questions instead of guessing. Bad guesses create more work downstream.
+
+Priya: That is built into how we define the agent behavior. Each agent, whether billing, tech-support, or general, should be helpful but honest about its limits. When confidence is low, it asks for clarification. When it truly cannot help, it flags for escalation.
+
+Diego: And the escalation flag in the API response, what does it look like? Is it just a boolean?
+
+Priya: We have not locked down the exact schema, but at minimum it is a clear field indicating that the query needs human attention. The consuming application decides what to do with it.
+
+Diego: I can work with that for now. My main request is that when we do build handoff, the conversation history from these MVP sessions is available so we do not lose context.
+
+Priya: That is a fair design consideration. The MVP stores conversation history locally, file-based or in-memory. It is not persistent long-term storage, but it means the data exists within a session.
+
+Facilitator: Any final points?
+
+Aisha: Keep the architecture conversational. Multi-turn context is the single most important thing we are shipping in MVP, even more than the classification itself.
+
+Diego: And put handoff, agent-assist, and analytics at the top of the post-MVP backlog. My team is waiting for those.
+
+Sarah: Agreed. The MVP is the foundation. We ship it, prove it works, and then build the features that actually change how the support team operates.
+
+Open Notes
+
+- MVP does not include live handoff, agent-assist, analytics, or any UI layer.
+- Escalation in MVP is an indicator in the API response, not an automated workflow.
+- Multi-turn conversation context within a session is the key MVP capability for future UX.
+- Storage is file-based or in-memory, not persistent long-term.
+- Handoff, agent-assist, and analytics are top priorities for the post-MVP phase.
+- Diego specifically wants analytics on trending topics, resolution rate, and average handling time.
+- Agent behavior should favor clarifying questions over guessing, and flag for escalation when confidence is low.
+- Responses should be concise but complete.
