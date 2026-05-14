@@ -46,6 +46,10 @@ Focus on:
 - Observability patterns with OpenTelemetry for agent systems
 
 Produce a research document summarizing findings, recommended approaches, trade-offs, and risks.
+
+IMPORTANT: Use only the attached file as context for this research. Do not use workspace files, prior conversation history, or 
+any other external context.
+
 ```
 
 #### Step 4: Review the Research Output
