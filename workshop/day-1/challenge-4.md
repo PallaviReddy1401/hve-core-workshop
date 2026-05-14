@@ -13,7 +13,7 @@ You need the **GitHub MCP Server** configured and running in VS Code. If you hav
 
 ### Enable Issues on Your Repository
 
-1. Go to `https://github.com/<your-github-username>/gcid-workshop/settings`
+1. Go to `https://github.com/<your-github-username>/hve-core-workshop/settings`
 2. Under **Features**, check **Issues** → **Save**
 
 ## Context
@@ -75,7 +75,7 @@ gh issue list --state open --limit 30
 > The Backlog Manager agent cannot create milestones. Create this manually.
 
 **GitHub UI:**
-Go to `https://github.com/<your-github-username>/gcid-workshop/milestones/new` → title **MVP - Sprint 1** → due date **2 weeks from today** → **Create milestone** → then assign all `P0-must-have` issues to it.
+Go to `https://github.com/<your-github-username>/hve-core-workshop/milestones/new` → title **MVP - Sprint 1** → due date **2 weeks from today** → **Create milestone** → then assign all `P0-must-have` issues to it.
 
 **GitHub CLI:**
 
