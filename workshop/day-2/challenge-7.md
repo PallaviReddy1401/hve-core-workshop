@@ -101,7 +101,7 @@ Then inspect the dataset. Aim for **40-50** Q&A pairs covering: easy scenarios, 
 Ask the agent to walk you through the evaluation flow:
 
 ```text
-Walk me through how to run the local evaluation. Explain what inputs the eval script expects, what outputs it produces, and what commands I need to run. Show me the exact Python commands to execute the evaluation against the dataset in data/evaluation/datasets/.
+Walk me through how to run the local evaluation. Explain what inputs the eval script expects, what outputs it produces, and what commands I need to run. Show me the exact Python commands to execute the evaluation against the dataset in data/evaluation/datasets/. Include instructions for the plumbing needed — specifically, create a prediction script that sends the utterances from the ground truth dataset to my running API/agent, collects the responses, and writes them to a predictions file. Then show me how to run the eval script against those predictions.
 ```
 
 Follow the commands to run the evaluations and save outputs under `data/evaluation/results/`.
