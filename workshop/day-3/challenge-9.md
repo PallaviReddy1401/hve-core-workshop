@@ -164,8 +164,10 @@ Resources to create:
    - Environment variables: FOUNDRY_PROJECT_ENDPOINT, FOUNDRY_MODEL, AZURE_CLIENT_ID (from the identity's clientId), APPLICATIONINSIGHTS_CONNECTION_STRING, LOG_LEVEL (INFO), CORS_ORIGINS (["*"])
    - Liveness probe on /health, readiness probe on /health/ready, startup probe on /health
    - HTTP-based autoscaling rule (concurrentRequests: 50)
-   - 0.5 CPU, 1Gi memory
-6. Role Assignment — derive the AI Services account name from foundryProjectEndpoint (extract subdomain), reference it with the 'existing' keyword, assign "Cognitive Services OpenAI User" (role definition ID 5e0bd9bd-7b93-4f28-af87-19fc36ad61bd) to the managed identity's principalId. Use guid(aiServices.id, identity.id, roleDefinitionId) for the assignment name.
+6. Role Assignments — derive the AI Services account name from foundryProjectEndpoint (extract subdomain), reference it with the 'existing' keyword, and assign both roles to the managed identity's principalId:
+   - "Cognitive Services User" (role definition ID a97b65f3-24c7-4388-baec-2e87135dc908) — for accessing AI Foundry project resources
+   Use guid(aiServices.id, identity.id, roleDefinitionId) for each assignment name.
+
 
 Outputs:
 - containerAppFqdn and containerAppUrl
@@ -179,6 +181,8 @@ Do NOT provision AI Foundry or model deployments — those already exist. The AI
 
 In the **Task Implementer agent**, prompt:
 
+- Replace the angle-bracket placeholders with your actual values from the prerequisites table before running.
+
 ```text
 Create infra/main.bicepparam using the 'using' syntax referencing ./main.bicep.
 
@@ -188,10 +192,9 @@ Set these values:
 - foundryProjectEndpoint = '<foundry-project-endpoint>'
 - foundryModel = '<model-deployment-name>'
 - minReplicas = 1
-- maxReplicas = 10
+- maxReplicas = 1
 - tags with project = 'smartassist' and environment = 'development'
 
-Leave the placeholder values as-is — participants will replace them with their own.
 ```
 
 ### Step 7: Deploy with `azd`
