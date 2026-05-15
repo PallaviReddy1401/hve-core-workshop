@@ -69,22 +69,38 @@ Approve to proceed with issue creation.
 gh issue list --state open --limit 30
 ```
 
-### Step 6: Create MVP Milestone (Manual)
+### Step 6: Create MVP Milestone and Assign P0 Issues
 
 > [!NOTE]
-> The Backlog Manager agent cannot create milestones. Create this manually.
+> The Backlog Manager agent cannot create milestones. Create the milestone manually first, then use **either** the GitHub Backlog Manager agent **or** GitHub CLI to assign your P0 issues to it.
 
-**GitHub UI:**
-Go to `https://github.com/<your-github-username>/hve-core-workshop/milestones/new` → title **MVP - Sprint 1** → due date **2 weeks from today** → **Create milestone** → then assign all `P0-must-have` issues to it.
+**Create the milestone (GitHub UI):**
 
-**GitHub CLI:**
+Go to `https://github.com/<your-github-username>/hve-core-workshop/milestones/new` → title **MVP - Sprint 1** → due date **2 weeks from today** → **Create milestone**.
+
+**Create the milestone (GitHub CLI):**
 
 ```bash
 gh api repos/<your-github-username>/gcid-workshop/milestones --method POST \
   -f title="MVP - Sprint 1" \
   -f due_on="$(date -v+14d -u +%Y-%m-%dT%H:%M:%SZ)" \
   -f description="Initial MVP sprint — all P0 must-have items"
+```
 
+**Assign P0 issues to the milestone — pick whichever approach you prefer:**
+
+**Option A: Using GitHub Backlog Manager agent**
+
+
+Ask the agent to move your P0 issues into the milestone:
+
+```text
+Assign all issues labeled "P0-must-have" to the "MVP - Sprint 1" milestone.
+```
+
+**Option B: UsingGitHub CLI**
+
+```bash
 gh issue list --label "P0-must-have" --json number --jq '.[].number' | \
   xargs -I {} gh issue edit {} --milestone "MVP - Sprint 1"
 ```
