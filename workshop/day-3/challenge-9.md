@@ -147,7 +147,7 @@ Parameters (all values that vary between environments):
 - foundryProjectEndpoint (string) — existing AI Foundry project endpoint URL
 - foundryModel (string, default 'gpt-4o') — model deployment name
 - containerImage (string) — container image reference (use a placeholder default for initial provisioning)
-- minReplicas (int, default 1) / maxReplicas (int, default 10) — scaling bounds
+- minReplicas (int, default 1) / maxReplicas (int, default 1) — scaling bounds
 - tags (object) — resource tags
 
 Derived values:
@@ -164,6 +164,7 @@ Resources to create:
    - Environment variables: FOUNDRY_PROJECT_ENDPOINT, FOUNDRY_MODEL, AZURE_CLIENT_ID (from the identity's clientId), APPLICATIONINSIGHTS_CONNECTION_STRING, LOG_LEVEL (INFO), CORS_ORIGINS (["*"])
    - Liveness probe on /health, readiness probe on /health/ready, startup probe on /health
    - HTTP-based autoscaling rule (concurrentRequests: 50)
+   - 2 CPU, 4Gi memory
 6. Role Assignments — derive the AI Services account name from foundryProjectEndpoint (extract subdomain), reference it with the 'existing' keyword, and assign both roles to the managed identity's principalId:
    - "Cognitive Services User" (role definition ID a97b65f3-24c7-4388-baec-2e87135dc908) — for accessing AI Foundry project resources
    Use guid(aiServices.id, identity.id, roleDefinitionId) for each assignment name.
