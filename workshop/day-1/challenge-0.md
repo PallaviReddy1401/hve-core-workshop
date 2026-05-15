@@ -46,7 +46,16 @@ az account show         # Should display your subscription
 az login                # If not authenticated
 ```
 
-### Step 4: Verify GitHub CLI
+### Step 4: Verify Azure Developer CLI (azd)
+
+Install if needed: <https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd>
+
+```bash
+azd version             # Should display the installed version
+azd auth login          # If not authenticated
+```
+
+### Step 5: Verify GitHub CLI
 
 Install if needed: <https://cli.github.com/>
 
@@ -54,7 +63,64 @@ Install if needed: <https://cli.github.com/>
 gh auth status          # Should show authenticated
 ```
 
-### Step 5: Enable GitHub MCP Server
+### Step 6: Create an Azure Resource Group
+
+Create a dedicated resource group for all workshop resources. Replace `<your-region>` with your preferred Azure region (e.g., `eastus2`, `westus3`, `swedencentral`):
+
+```bash
+az group create --name hve-workshop-rg --location <your-region>
+```
+
+Verify the resource group was created:
+
+```bash
+az group show --name hve-workshop-rg --query "{name:name, location:location, state:properties.provisioningState}" -o table
+```
+
+> **Note:** This resource group is used throughout the workshop. Do not delete it until all challenges are complete.
+
+### Step 7: Create an Azure AI Foundry Resource with a Model Deployment
+
+You need an Azure AI Foundry (formerly Azure OpenAI) resource with a model deployment for the evaluation challenge (Challenge 7). Create it now so the deployment is ready by the time you reach that stage.
+
+**Create the Azure AI Services resource:**
+
+```bash
+az cognitiveservices account create \
+  --name hve-workshop-ai \
+  --resource-group hve-workshop-rg \
+  --kind OpenAI \
+  --sku S0 \
+  --location <your-region> \
+  --yes
+```
+
+**Deploy a model (e.g., `gpt-4o`):**
+
+```bash
+az cognitiveservices account deployment create \
+  --name hve-workshop-ai \
+  --resource-group hve-workshop-rg \
+  --deployment-name gpt-4o \
+  --model-name gpt-4o \
+  --model-version "2024-08-06" \
+  --model-format OpenAI \
+  --sku-name Standard \
+  --sku-capacity 10
+```
+
+**Retrieve the endpoint for later use:**
+
+```bash
+az cognitiveservices account show \
+  --name hve-workshop-ai \
+  --resource-group hve-workshop-rg \
+  --query "{endpoint:properties.endpoint}" -o table
+```
+
+> **Note:** Save the endpoint — you will need it in Challenge 7 for LLM-as-judge evaluation calls. Authentication uses Azure AD (`az login`) — key-based auth is not supported.
+
+### Step 8: Enable GitHub MCP Server
 
 The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and repositories directly. Enable it in VS Code:
 
@@ -75,13 +141,13 @@ The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and reposit
 
 > **Note:** Requires VS Code 1.101 or later for remote MCP and OAuth support.
 
-### Step 6: Fork the Workshop Repository
+### Step 9: Fork the Workshop Repository
 
 Fork the workshop repository to your own GitHub account:
 
 ```bash
-gh repo fork https://github.com/sapsing_microsoft/gcid-workshop --clone
-cd gcid-workshop
+gh repo fork https://github.com/mcaps-microsoft/hve-core-workshop --clone
+cd hve-core-workshop
 ```
 
 Verify the fork:
@@ -90,16 +156,16 @@ Verify the fork:
 git remote -v   # Should show your fork as 'origin'
 ```
 
-### Step 7: Verify HVE-Core Agents
+### Step 10: Verify HVE-Core Agents
 
 Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in the agent picker:
 
 - BRD Builder
 - PRD Builder
 - Task Researcher
-- Task Planner
 - ADR Creation
 - GitHub Backlog Manager
+- Task Planner
 - Task Implementor
 - Task Reviewer
 - RPI Agent
@@ -110,6 +176,9 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 - [ ] HVE Core - All extension active in VS Code
 - [ ] Python 3.11+ available
 - [ ] Azure CLI authenticated with active subscription
+- [ ] Azure Developer CLI (`azd`) installed and authenticated
+- [ ] Resource group `hve-workshop-rg` created
+- [ ] Azure AI Foundry resource created with a `gpt-4o` deployment
 - [ ] GitHub CLI authenticated
 - [ ] GitHub MCP server configured in VS Code
 - [ ] Workshop repository forked and cloned
@@ -121,5 +190,8 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 |-------|----------|
 | HVE-Core agents not appearing | Reload VS Code window (`Ctrl+Shift+P` → "Reload Window") |
 | Azure CLI not authenticated | Run `az login` and select your subscription |
+| Azure Developer CLI not found | Install from <https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd> |
+| Resource group creation failed | Ensure your subscription is active: `az account show` |
+| AI Foundry deployment failed | Check region availability and quota: `az cognitiveservices account list-skus --kind OpenAI --location <region>` |
 | GitHub CLI auth failed | Run `gh auth login` and follow the browser flow |
 | Python version too old | Install Python 3.11+ from python.org |
