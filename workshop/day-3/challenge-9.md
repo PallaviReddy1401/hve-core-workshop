@@ -91,11 +91,11 @@ Create a Dockerfile at the project root for our SmartAssist FastAPI application.
 Requirements:
 - Use python:3.12-slim as the base image
 - Install system dependencies (gcc) needed by Python packages
-- Copy pyproject.toml and src/ into the image
+- Copy pyproject.toml/requirements.txt and src/ into the image
 - Install the project with pip install --no-cache-dir .
 - Create a non-root user and switch to it
 - Expose port 8000
-- Start with: uvicorn smartassist.main:app --host 0.0.0.0 --port 8000
+- Start with: uvicorn <Fast API App> --host 0.0.0.0 --port 8000
 ```
 
 ### Step 3: Test the Dockerfile Locally (Optional)
