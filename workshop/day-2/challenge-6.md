@@ -112,7 +112,22 @@ smartassist-agent/
 ## Hints
 
 <details>
-<summary>Hint 1: Choosing between manual R→P→I→R and RPI Agent</summary>
+<summary>Hint 1: Agents using hardcoded keyword classification instead of Azure OpenAI</summary>
+
+If the RPI Agent implements your router or classification logic using a hardcoded list of keywords (e.g., `if "billing" in message`) instead of making LLM calls via Azure OpenAI, guide it to use actual chat completions.
+
+Run a revised prompt for the RPI Agent:
+
+```text
+Implement GitHub issue #<issue-number>. The agent classification and routing MUST use Azure OpenAI chat completion endpoints — do NOT use hardcoded keyword matching or rule-based classification. Use the Azure OpenAI SDK to call the chat endpoint for intent classification and agent responses.
+```
+
+This ensures the agents call Azure OpenAI for classification rather than relying on static keyword lists.
+
+</details>
+
+<details>
+<summary>Hint 2: Choosing between manual R→P→I→R and RPI Agent</summary>
 
 **Use manual R→P→I→R when:**
 
@@ -129,7 +144,7 @@ smartassist-agent/
 </details>
 
 <details>
-<summary>Hint 2: Environment configuration</summary>
+<summary>Hint 3: Environment configuration</summary>
 
 Create a `.env.example` with required variables:
 
