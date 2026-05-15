@@ -157,6 +157,14 @@ Or ask Copilot:
 Commit all changes and close GitHub issue #<issue-number>
 ```
 
+> [!IMPORTANT]
+> **Prepare for deployment.** The next challenge deploys SmartAssist to Azure Container Apps, which requires **liveness** (`GET /health`) and **readiness** (`GET /health/ready`) probes. Make sure your API exposes both endpoints and that each returns `200 OK`. If either is missing, add them now before moving on.
+>
+> ```bash
+> curl http://localhost:8000/health
+> curl http://localhost:8000/health/ready
+> ```
+
 ## Success Criteria
 
 - **Issue Created** — Refactoring issue exists in GitHub backlog with clear acceptance criteria
@@ -166,6 +174,7 @@ Commit all changes and close GitHub issue #<issue-number>
 - **Routing Preserved** — Router still dispatches to correct specialist agents
 - **Memory Works** — Conversation history still functions post-migration
 - **No Regressions** — Existing tests pass, application starts without errors
+- **Health Endpoints** — `/health` (liveness) and `/health/ready` (readiness) return `200 OK`
 - **Foundry Ready** — Code structure supports deployment to Microsoft Foundry
 
 ## Hints

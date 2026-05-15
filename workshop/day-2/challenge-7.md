@@ -58,6 +58,9 @@ Keep this short. You will use it next to decide which metrics are primary versus
 
 ![Evaluation Dataset Creator Agent](../assets/reference_images/Evaluation-Dataset-Creator-Agent.png)
 
+> [!IMPORTANT]
+> This agent includes brainstorming and creating a synthetic dataset. We recommend using the best model available with deep reasoning, such as **Claude Opus 4.6 - High**, for best results.
+
 Open a new chat with the **Evaluation Dataset Creator** agent. Attach the PRD at `docs/prds/smartassist-customer-support.md` for richer context.
 
 ```text
@@ -98,7 +101,7 @@ Then inspect the dataset. Aim for **40-50** Q&A pairs covering: easy scenarios, 
 
 ### Step 4: Run the Evaluation and Record a Baseline
 
-Ask the agent to walk you through the evaluation flow:
+Using the same **Evaluation Dataset Creator** agent, ask it to walk you through the evaluation flow:
 
 ```text
 Walk me through how to run the local evaluation. Explain what inputs the eval script expects, what outputs it produces, and what commands I need to run. Show me the exact Python commands to execute the evaluation against the dataset in data/evaluation/datasets/. Include instructions for the plumbing needed — specifically, create a prediction script that sends the utterances from the ground truth dataset to my running API/agent, collects the responses, and writes them to a predictions file. Then show me how to run the eval script against those predictions.
