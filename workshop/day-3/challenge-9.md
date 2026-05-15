@@ -91,11 +91,11 @@ Create a Dockerfile at the project root for our SmartAssist FastAPI application.
 Requirements:
 - Use python:3.12-slim as the base image
 - Install system dependencies (gcc) needed by Python packages
-- Copy pyproject.toml and src/ into the image
+- Copy pyproject.toml/requirements.txt and src/ into the image
 - Install the project with pip install --no-cache-dir .
 - Create a non-root user and switch to it
 - Expose port 8000
-- Start with: uvicorn smartassist.main:app --host 0.0.0.0 --port 8000
+- Start with: uvicorn <Fast API App> --host 0.0.0.0 --port 8000
 ```
 
 ### Step 3: Test the Dockerfile Locally (Optional)
@@ -165,8 +165,10 @@ Resources to create:
    - Liveness probe on /health, readiness probe on /health/ready, startup probe on /health
    - HTTP-based autoscaling rule (concurrentRequests: 50)
    - 2 CPU, 4Gi memory
-6. Role Assignments — derive the AI Services account name from foundryProjectEndpoint (extract subdomain), reference it with the 'existing' keyword, and assign both roles to the managed identity's principalId:
+6. Azure container registry   
+7. Role Assignments — derive the AI Services account name from foundryProjectEndpoint (extract subdomain), reference it with the 'existing' keyword, and assign both roles to the managed identity's principalId:
    - "Cognitive Services User" (role definition ID a97b65f3-24c7-4388-baec-2e87135dc908) — for accessing AI Foundry project resources
+   - AcrPull for container registry
    Use guid(aiServices.id, identity.id, roleDefinitionId) for each assignment name.
 
 
@@ -186,9 +188,12 @@ In the **Task Implementer agent**, prompt:
 
 ```text
 Create infra/main.bicepparam using the 'using' syntax referencing ./main.bicep.
+- Populate `baseName` with a random unique 12 chars small case string.
+- Confirm the location from user for for their resource group.
+- Populate foundryProjectEndpoint and foundryModel from .env file, if .env does not exist ask user.
 
 Set these values:
-- baseName = 'smartassist'
+- baseName = '<baseName>'
 - location = '<location>'
 - foundryProjectEndpoint = '<foundry-project-endpoint>'
 - foundryModel = '<model-deployment-name>'

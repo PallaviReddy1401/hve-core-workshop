@@ -63,7 +63,18 @@ Install if needed: <https://cli.github.com/>
 gh auth status          # Should show authenticated
 ```
 
-### Step 6: Create an Azure Resource Group
+### Step 6: Verify Docker
+
+Docker is used in Challenge 9 to build and test the container locally before deploying to Azure.
+
+Install if needed: <https://docs.docker.com/get-started/get-docker/>
+
+```bash
+docker --version        # Should display the installed version
+docker info             # Should show Docker daemon is running
+```
+
+### Step 7: Create an Azure Resource Group
 
 Create a dedicated resource group for all workshop resources. Replace `<your-region>` with your preferred Azure region (e.g., `eastus2`, `westus3`, `swedencentral`):
 
@@ -79,7 +90,7 @@ az group show --name hve-workshop-rg --query "{name:name, location:location, sta
 
 > **Note:** This resource group is used throughout the workshop. Do not delete it until all challenges are complete.
 
-### Step 7: Create an Azure AI Foundry Resource with a Model Deployment
+### Step 8: Create an Azure AI Foundry Resource with a Model Deployment
 
 You need an Azure AI Foundry (formerly Azure OpenAI) resource with a model deployment for the evaluation challenge (Challenge 7). Create it now so the deployment is ready by the time you reach that stage.
 
@@ -89,7 +100,7 @@ You need an Azure AI Foundry (formerly Azure OpenAI) resource with a model deplo
 az cognitiveservices account create \
   --name hve-workshop-ai \
   --resource-group hve-workshop-rg \
-  --kind OpenAI \
+  --kind AIServices \
   --sku S0 \
   --location <your-region> \
   --yes
@@ -103,7 +114,7 @@ az cognitiveservices account deployment create \
   --resource-group hve-workshop-rg \
   --deployment-name gpt-4o \
   --model-name gpt-4o \
-  --model-version "2024-08-06" \
+  --model-version "2024-11-20" \
   --model-format OpenAI \
   --sku-name Standard \
   --sku-capacity 10
@@ -120,7 +131,7 @@ az cognitiveservices account show \
 
 > **Note:** Save the endpoint — you will need it in Challenge 7 for LLM-as-judge evaluation calls. Authentication uses Azure AD (`az login`) — key-based auth is not supported.
 
-### Step 8: Enable GitHub MCP Server
+### Step 9: Enable GitHub MCP Server
 
 The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and repositories directly. Enable it in VS Code:
 
@@ -141,7 +152,7 @@ The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and reposit
 
 > **Note:** Requires VS Code 1.101 or later for remote MCP and OAuth support.
 
-### Step 9: Fork the Workshop Repository
+### Step 10: Fork the Workshop Repository
 
 Fork the workshop repository to your own GitHub account:
 
@@ -156,7 +167,7 @@ Verify the fork:
 git remote -v   # Should show your fork as 'origin'
 ```
 
-### Step 10: Verify HVE-Core Agents
+### Step 11: Verify HVE-Core Agents
 
 Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in the agent picker:
 
@@ -180,6 +191,7 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 - [ ] Resource group `hve-workshop-rg` created
 - [ ] Azure AI Foundry resource created with a `gpt-4o` deployment
 - [ ] GitHub CLI authenticated
+- [ ] Docker installed and daemon running
 - [ ] GitHub MCP server configured in VS Code
 - [ ] Workshop repository forked and cloned
 - [ ] All HVE Core agents visible in Copilot Chat
@@ -194,4 +206,5 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 | Resource group creation failed | Ensure your subscription is active: `az account show` |
 | AI Foundry deployment failed | Check region availability and quota: `az cognitiveservices account list-skus --kind OpenAI --location <region>` |
 | GitHub CLI auth failed | Run `gh auth login` and follow the browser flow |
+| Docker daemon not running | Start Docker Desktop or run `sudo systemctl start docker` (Linux) |
 | Python version too old | Install Python 3.11+ from python.org |
