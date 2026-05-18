@@ -7,6 +7,22 @@
 | **HVE-Core Stage** | Stage 8: Delivery                                                                      |
 | **Agent**          | Task Implementer agent                                                                 |
 
+## Introduction
+
+The final stage of the HVE-Core lifecycle is **Delivery** — getting your application running in production. In this challenge, you will containerize SmartAssist and deploy it to **Azure Container Apps** using Infrastructure as Code (Bicep) and the Azure Developer CLI (`azd`). The deployment uses Managed Identity for secret-free authentication to Azure AI Foundry, and includes observability via Application Insights. This mirrors a real-world production deployment workflow.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Create a production-ready Dockerfile for a FastAPI application
+- Author Bicep templates to provision Azure Container Apps, Managed Identity, and monitoring resources
+- Configure `azure.yaml` for Azure Developer CLI project orchestration
+- Deploy a containerized application using `azd up`
+- Implement secret-free authentication using User-Assigned Managed Identity with RBAC role assignments
+- Configure health probes (liveness, readiness, startup) for container orchestration
+- Verify end-to-end telemetry in Application Insights
+
 ## Context
 
 SmartAssist is a FastAPI application built with the Microsoft Agent Framework. It uses `FoundryChatClient` with `DefaultAzureCredential` to call OpenAI models hosted in an **existing** Azure AI Foundry project. The deployment target is **Azure Container Apps** — a serverless container platform that handles scaling, networking, and TLS termination.

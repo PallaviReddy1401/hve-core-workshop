@@ -5,9 +5,20 @@
 | **Duration** | 20 minutes |
 | **Objective** | Verify all tools are installed and configured for the workshop |
 
-## Context
+## Introduction
 
-Before diving into HVE-Core workflows, you need a properly configured development environment. This challenge ensures everyone starts from the same baseline.
+Before diving into HVE-Core workflows, you need a properly configured development environment. This challenge ensures everyone starts from the same baseline with all required tools installed, authenticated, and ready to use. You will verify your IDE setup, CLI tools, cloud services, and MCP integrations that power the entire workshop.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Confirm that VS Code extensions (HVE-Core, GitHub Copilot) are installed and active
+- Verify Python, Azure CLI, Azure Developer CLI, GitHub CLI, and Docker are properly configured
+- Authenticate against Azure and GitHub services
+- Provision an Azure resource group and AI Foundry resource for use in later challenges
+- Enable the GitHub MCP server for direct GitHub integration from Copilot Chat
+- Access all HVE-Core agents from the Copilot Chat agent picker
 
 ## Instructions
 

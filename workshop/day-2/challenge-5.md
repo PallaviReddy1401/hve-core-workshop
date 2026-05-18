@@ -7,9 +7,23 @@
 | **HVE-Core Stage** | Stage 6: Implementation |
 | **Agents** | `GitHub Backlog Manager` → `Task Researcher` → `Task Planner` → `Task Implementor` → `Task Reviewer` |
 
-## Context
+## Introduction
 
-This is where HVE-Core's RPI workflow shines. Instead of asking Copilot to "build me an agent" (which produces hallucinated, untested code), you will use the structured **Research → Plan → Implement → Review** cycle to build verified, working code.
+This is where HVE-Core's RPI workflow shines. Instead of asking Copilot to "build me an agent" (which produces hallucinated, untested code), you will use the structured **Research → Plan → Implement → Review** cycle to build verified, working code. Each phase has a dedicated agent, and you drive the workflow manually — inspecting and validating outputs at every step. This gives you fine-grained control over architectural decisions and ensures research-backed implementation.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Use the `GitHub Backlog Manager` agent to prioritize and sequence epics for implementation
+- Execute the full manual R→P→I→R cycle: Research, Plan, Implement, Review
+- Use the `Task Researcher` agent to investigate implementation patterns before writing code
+- Use the `Task Planner` agent to create actionable implementation plans from research
+- Use the `Task Implementor` agent to build code that follows a verified plan
+- Use the `Task Reviewer` agent to validate implementation against the plan
+- Understand when manual R→P→I→R is preferred over autonomous execution
+
+## Context
 
 You will start by using the **GitHub Backlog Manager** agent to get a prioritized, ordered list of P0 epics. Then you'll implement the first epic using the **manual R→P→I→R cycle**, giving you fine-grained control over every phase. The RPI workflow ensures:
 

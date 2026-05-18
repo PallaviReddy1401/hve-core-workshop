@@ -7,6 +7,21 @@
 | **HVE-Core Stage** | Stage 4: Decomposition                                                                                                                   |
 | **Agent**          | `GitHub Backlog Manager`                                                                                                                 |
 
+## Introduction
+
+A PRD describes what to build, but engineers need a prioritized, decomposed backlog of implementable work items. In the HVE-Core lifecycle, **Stage 4: Decomposition** breaks the PRD into epics, user stories, labels, and dependency relationships — creating a structured backlog ready for sprint planning. You will use the `GitHub Backlog Manager` agent to generate GitHub issues directly from your PRD, complete with acceptance criteria, priority labels, and parent-child relationships.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Use the `GitHub Backlog Manager` agent to decompose a PRD into GitHub issues
+- Create epics as parent issues and user stories as sub-issues with proper hierarchy
+- Apply structured labeling conventions (priority, domain, type) to issues
+- Write acceptance criteria in Given/When/Then format
+- Create milestones and assign prioritized work items for sprint planning
+- Use the GitHub MCP server to interact with GitHub directly from Copilot Chat
+
 ## Prerequisites
 
 You need the **GitHub MCP Server** configured and running in VS Code. If you haven't set this up yet, refer to [Challenge 0, Step 5](challenge-0.md#step-5-enable-github-mcp-server) for instructions.
@@ -15,10 +30,6 @@ You need the **GitHub MCP Server** configured and running in VS Code. If you hav
 
 1. Go to `https://github.com/<your-github-username>/hve-core-workshop/settings`
 2. Under **Features**, check **Issues** → **Save**
-
-## Context
-
-**Stage 4: Decomposition** breaks the PRD into implementable work items. Using your PRD and ADRs from Challenge 3, the `GitHub Backlog Manager` agent creates epics, user stories, labels, acceptance criteria, and dependency relationships as GitHub issues.
 
 ## Instructions
 
