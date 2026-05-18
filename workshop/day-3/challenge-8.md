@@ -7,6 +7,21 @@
 | **HVE-Core Stage** | Stage 6: Implementation (brownfield)                                                                                                          |
 | **Agents**         | `GitHub Backlog Manager` → `Task Researcher` → `Task Planner` → `Task Implementor` → `Task Reviewer`                                          |
 
+## Introduction
+
+Up to this point you have built a working agent system. Now you face a common real-world scenario: **brownfield refactoring** — migrating existing, functioning code to a new framework while preserving all behavior. You will refactor SmartAssist to use Microsoft Agent Framework with `FoundryChatClient`. The R→P→I→R workflow applies equally well to refactoring tasks as it does to greenfield work.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Apply the R→P→I→R workflow to a brownfield refactoring scenario
+- Map existing agent abstractions to Microsoft Agent Framework equivalents (`Agent`, `FoundryChatClient`)
+- Create a phased migration strategy that maintains backward compatibility
+- Use `DefaultAzureCredential` for secret-free authentication
+- Verify post-migration behavior matches the original implementation
+- Prepare an application for cloud deployment to Microsoft Foundry
+
 ## Context
 
 ### Where You Are (End of Day 2)

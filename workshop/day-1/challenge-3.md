@@ -7,12 +7,21 @@
 | **HVE-Core Stage** | Stage 4: Research |
 | **Agents** | `Task Researcher` |
 
+## Introduction
+
+Before jumping into implementation, strong engineering teams invest in **technical research** to explore the problem space, surface risks, and compare alternative approaches. In this challenge, you will use the `Task Researcher` agent to investigate technical patterns informed by your PRD — covering agent handoff strategies, memory architectures, deployment options, and observability patterns. The research output provides the evidence base for informed architecture decisions.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Use the `Task Researcher` agent to explore technical approaches from a PRD
+- Compare multiple implementation options with documented trade-offs
+- Identify technical risks and unknowns before committing to an approach
+- Understand the role of Architecture Decision Records (ADRs) in capturing the *why* behind choices
+- Produce a research document that informs downstream planning and implementation
+
 ## Context
-
-Before jumping into implementation, strong engineering teams invest in **technical research** and **architecture decisions**. This challenge covers a critical activity:
-
-- **Task Research** — Explore the problem space from the PRD, surface technical risks, and recommend approaches
-
 
 | Activity | Input | Output | Agent |
 |----------|-------|--------|-------|

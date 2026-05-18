@@ -7,11 +7,23 @@
 | **HVE-Core Stage** | Stage 6: Implementation |
 | **Agents** | `RPI Agent` |
 
+## Introduction
+
+In the previous challenge you learned the manual R→P→I→R cycle by driving each phase individually. Now you will use the **RPI Autonomous Agent**, which orchestrates the same Research → Plan → Implement → Review workflow but runs it end-to-end without user input between phases. This accelerates development for well-defined tasks where the scope is clear and no major design decisions require human judgment.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Use the `RPI Agent` to execute the full R→P→I→R cycle autonomously on a GitHub issue
+- Decide when to use autonomous RPI versus manual R→P→I→R based on task complexity
+- Batch related epics into a single RPI run to accelerate implementation
+- Verify agent-produced code works correctly before committing
+- Close GitHub issues via commit messages with proper linking
+
 ## Context
 
-In the previous challenge you learned the manual R→P→I→R cycle by driving each phase individually. Now you will use the **RPI Autonomous Agent**, which runs the same Research → Plan → Implement → Review workflow but does it autonomously, with no user input required between phases.
-
-This approach is ideal for:
+The autonomous approach is ideal for:
 
 - Smaller, well-defined tasks where the scope is clear
 - Epics with no major design decisions that need human judgment

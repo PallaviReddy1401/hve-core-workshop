@@ -7,9 +7,21 @@
 | **HVE-Core Stage** | Stage 3: Product Definition |
 | **Agent** | `PRD Builder` |
 
-## Context
+## Introduction
 
-In the HVE-Core lifecycle, **Stage 3: Product Definition** transforms business requirements into a technical product specification. The PRD bridges the gap between *what the business wants* and *what engineers will build*.
+With business requirements captured in a BRD, the next step is translating them into a technical product specification that engineering teams can act on. In the HVE-Core lifecycle, **Stage 3: Product Definition** bridges the gap between *what the business wants* and *what engineers will build*. You will use the `PRD Builder` agent to produce a Product Requirements Document containing user stories, acceptance criteria, architecture decisions, and a feature breakdown suitable for backlog creation.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Use the `PRD Builder` agent to transform a BRD into a technical product specification
+- Distinguish between BRD-level (business outcomes) and PRD-level (technical capabilities) writing
+- Define user stories with clear acceptance criteria
+- Establish MVP scope boundaries using priority tagging (P0/P1/P2)
+- Document non-functional requirements including performance, security, and scalability
+
+## Context
 
 A PRD differs from a BRD in critical ways:
 

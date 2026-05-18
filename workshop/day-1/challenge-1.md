@@ -7,17 +7,19 @@
 | **HVE-Core Stage** | Stage 2: Discovery |
 | **Agent** | `brd-builder` |
 
-## Context
+## Introduction
 
-In the HVE-Core lifecycle, **Stage 2: Discovery** is where unstructured information becomes structured knowledge. The `brd-builder` agent (or the Task Researcher in discovery mode) analyzes raw inputs — meeting notes, emails, feature requests — and produces a Business Requirements Document that captures:
+In the HVE-Core lifecycle, **Stage 2: Discovery** is where unstructured information becomes structured knowledge. Real-world projects begin with scattered inputs — meeting notes, emails, stakeholder conversations — that must be distilled into a coherent understanding of what the business needs. In this challenge, you will use the `brd-builder` agent to analyze raw stakeholder notes and produce a Business Requirements Document (BRD) that captures business objectives, stakeholder needs, constraints, and scope boundaries. The BRD is a **business-facing** document: it describes *what* the business needs, not *how* to build it technically.
 
-- Business objectives and success metrics
-- Stakeholder needs (prioritized and reconciled)
-- Constraints and assumptions
-- Scope boundaries (in/out)
-- Risk factors
+## Learning Objectives
 
-The BRD is a **business-facing** document. It describes *what* the business needs, not *how* to build it technically.
+By the end of this challenge, you will be able to:
+
+- Use the `BRD Builder` agent to transform unstructured stakeholder inputs into a structured document
+- Identify and reconcile contradictions between competing stakeholder priorities
+- Define clear scope boundaries (in-scope, out-of-scope, future-scope)
+- Produce measurable business objectives with quantifiable success criteria
+- Iterate on agent output to refine and improve document quality
 
 ## Your Raw Requirements
 

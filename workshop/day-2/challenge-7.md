@@ -12,9 +12,22 @@
 > [!IMPORTANT]
 > `Evaluation Dataset Creator` is currently part of the pre-release version of the `hve-core all` extension.
 
-## Context
+## Introduction
 
-Building an AI agent is only half the job. Without evaluation, you do not know whether it works, how well it works, or whether your next change makes things better or worse. Evaluation is the feedback loop that turns experimentation into engineering.
+Building an AI agent is only half the job. Without evaluation, you have no way to know whether the agent works correctly, how well it performs, or whether changes improve or degrade quality. Evaluation is the feedback loop that turns experimentation into engineering. In this challenge, you will use the `Evaluation Dataset Creator` agent to curate a ground truth dataset, select appropriate metrics, and run your first local evaluation suite against SmartAssist — establishing a measurable baseline for future iteration.
+
+## Learning Objectives
+
+By the end of this challenge, you will be able to:
+
+- Define success criteria for an AI agent before measuring anything
+- Use the `Evaluation Dataset Creator` agent to curate a synthetic evaluation dataset
+- Distinguish between ground truth metrics and LLM-as-judge metrics and when to use each
+- Categorize metrics into primary (release gates) and secondary (improvement signals)
+- Run a local evaluation script and record a baseline
+- Perform error analysis to identify patterns in agent failures and prioritize fixes
+
+## Context
 
 ### The Evaluation Lifecycle
 
