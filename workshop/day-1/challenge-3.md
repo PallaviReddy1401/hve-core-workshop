@@ -95,7 +95,7 @@ If the researcher output is too generic, provide more specific research question
 
 ```
 Specifically research:
-- How does AgentGroupChat in Microsoft Agent Framework handle multi-turn routing?
+- What are the common patterns for multi-turn routing in multi-agent systems?
 - What are the patterns for agent handoff vs agent delegation?
 - How does FoundryChatClient manage token limits across conversation turns?
 ```

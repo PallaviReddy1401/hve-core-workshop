@@ -178,14 +178,18 @@ Copilot will use the GitHub MCP tools or CLI to commit, push, and close the issu
 <details>
 <summary>Hint 2: Environment configuration</summary>
 
-Create a `.env.example` with required variables:
+Check if a `.env.example` file was created during implementation. If it exists, copy it to `.env` and fill in your actual values:
 
+```bash
+cp .env.example .env
+```
+
+Then update the values in .env with your Azure OpenAI resource details:
 ```env
 AZURE_OPENAI_ENDPOINT=https://<your-project>.services.ai.azure.com
 AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
 ```
-
-Load in your config:
+Ensure your application loads these variables at startup (e.g., via python-dotenv or your framework's config module). An example below:
 
 ```python
 import os

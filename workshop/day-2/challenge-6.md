@@ -158,19 +158,10 @@ This ensures the agents call Azure OpenAI for classification rather than relying
 <details>
 <summary>Hint 3: Environment configuration</summary>
 
-Create a `.env.example` with required variables:
+Verify that a `.env` file exists with your Azure OpenAI resource values populated. If not, check whether a `.env.example` was created during Challenge 5 and copy it:
 
-```env
-AZURE_OPENAI_ENDPOINT=https://<your-project>.services.ai.azure.com
-AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
-```
-
-Load in your config:
-
-```python
-import os
-from dotenv import load_dotenv
-load_dotenv()
+```bash
+cp .env.example .env
 ```
 
 </details>
