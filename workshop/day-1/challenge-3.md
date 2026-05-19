@@ -82,9 +82,9 @@ Save or note the research output path for the next part.
 
 ## Success Criteria
 
-- [ ] **Research Document** — Task Researcher produced a document exploring technical approaches
-- [ ] **Multiple Options** — At least 2 approaches compared for key architectural decisions
-- [ ] **Trade-offs Documented** — Pros, cons, and risks identified for each approach
+- **Research Document** — Task Researcher produced a document exploring technical approaches
+- **Multiple Options** — At least 2 approaches compared for key architectural decisions
+- **Trade-offs Documented** — Pros, cons, and risks identified for each approach
 
 ## Hints
 
@@ -102,7 +102,14 @@ Specifically research:
 
 </details>
 
-</details>
+<details>
+<summary>Hint 2: Structuring the research output</summary>
+
+If the research output is unstructured, ask for a comparison table:
+
+```text
+For each architectural decision (handoff strategy, memory architecture, observability), present a comparison table with columns: Option, Pros, Cons, Risks, Recommendation.
+```
 
 ## Bonus
 
