@@ -161,8 +161,8 @@ This ensures the agents call Azure OpenAI for classification rather than relying
 Create a `.env.example` with required variables:
 
 ```env
-FOUNDRY_PROJECT_ENDPOINT=https://<your-project>.services.ai.azure.com
-FOUNDRY_MODEL_DEPLOYMENT_NAME=gpt-4o
+AZURE_OPENAI_ENDPOINT=https://<your-project>.services.ai.azure.com
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
 ```
 
 Load in your config:

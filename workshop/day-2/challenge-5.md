@@ -155,50 +155,34 @@ Copilot will use the GitHub MCP tools or CLI to commit, push, and close the issu
 ## Hints
 
 <details>
-<summary>Hint 1: Minimal working agent</summary>
-
-A minimal MAF agent looks like:
-
-```python
-import asyncio
-from agent_framework import Agent
-from agent_framework.foundry import FoundryChatClient
-from azure.identity import AzureCliCredential
-
-async def main():
-    agent = Agent(
-        client=FoundryChatClient(credential=AzureCliCredential()),
-        name="SmartAssist Router",
-        instructions="You route customer queries to the appropriate specialist.",
-    )
-    response = await agent.run("I have a billing question")
-    print(response)
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-</details>
-
-<details>
-<summary>Hint 2: When to use manual R→P→I→R</summary>
+<summary>Hint 1: When to use manual R→P→I→R</summary>
 
 **Use manual R→P→I→R when:**
 
 - You're building foundational infrastructure (first epic is always a good candidate)
 - The epic has ambiguous acceptance criteria that need interpretation
-- You want to learn and understand each phase of the workflow
+- **Rule of Thumb:** If you need to understand something before implementing, use RPI.
+
+
+| Use RPI When...                | Use Quick Edits When... |
+|--------------------------------|-------------------------|
+| Changes span multiple files    | Fixing a typo           |
+| Learning new patterns/APIs     | Adding a log statement  |
+| External dependencies involved | Refactoring < 50 lines  |
+| Requirements are unclear       | Change is obvious       |
+
+
 
 </details>
 
 <details>
-<summary>Hint 3: Environment configuration</summary>
+<summary>Hint 2: Environment configuration</summary>
 
 Create a `.env.example` with required variables:
 
 ```env
-FOUNDRY_PROJECT_ENDPOINT=https://<your-project>.services.ai.azure.com
-FOUNDRY_MODEL_DEPLOYMENT_NAME=gpt-4o
+AZURE_OPENAI_ENDPOINT=https://<your-project>.services.ai.azure.com
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o
 ```
 
 Load in your config:

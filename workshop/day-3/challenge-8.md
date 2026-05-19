@@ -182,15 +182,15 @@ Commit all changes and close GitHub issue #<issue-number>
 
 ## Success Criteria
 
-- **Issue Created** — Refactoring issue exists in GitHub backlog with clear acceptance criteria
-- **Research Complete** — Research document maps existing code to MAF equivalents
-- **Plan Created** — Migration plan with phased approach and rollback strategy
-- **Agents Migrated** — All agents use `Agent` + `FoundryChatClient` pattern
-- **Routing Preserved** — Router still dispatches to correct specialist agents
-- **Memory Works** — Conversation history still functions post-migration
-- **No Regressions** — Existing tests pass, application starts without errors
-- **Health Endpoints** — `/health` (liveness) and `/health/ready` (readiness) return `200 OK`
-- **Foundry Ready** — Code structure supports deployment to Microsoft Foundry
+- [ ] **Issue Created** — Refactoring issue exists in GitHub backlog with clear acceptance criteria
+- [ ] **Research Complete** — Research document maps existing code to MAF equivalents
+- [ ] **Plan Created** — Migration plan with phased approach and rollback strategy
+- [ ] **Agents Migrated** — All agents use `Agent` + `FoundryChatClient` pattern
+- [ ] **Routing Preserved** — Router still dispatches to correct specialist agents
+- [ ] **Memory Works** — Conversation history still functions post-migration
+- [ ] **No Regressions** — Existing tests pass, application starts without errors
+- [ ] **Health Endpoints** — `/health` (liveness) and `/health/ready` (readiness) return `200 OK`
+- [ ] **Foundry Ready** — Code structure supports deployment to Microsoft Foundry
 
 ## Hints
 

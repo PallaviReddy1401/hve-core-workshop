@@ -282,14 +282,14 @@ git push
 
 ## Success Criteria
 
-- **Dockerfile** — builds a working container image with a non-root user
-- **azure.yaml** — valid `azd` project file pointing to the Dockerfile and Bicep
-- **Bicep template** — provisions Container Apps Environment, Container App, Managed Identity, Log Analytics, and Application Insights
-- **Managed Identity** — user-assigned identity with `Cognitive Services OpenAI User` role on the AI Foundry resource
-- **No secrets in code** — authentication uses `DefaultAzureCredential` exclusively; no API keys in environment variables or source
-- **Health probes** — `/health` (liveness) and `/health/ready` (readiness) return 200 OK
-- **Deployed and responding** — `azd up` succeeds and the Container App answers chat requests
-- **Observability** — request traces visible in Application Insights
+- [ ] **Dockerfile** — builds a working container image with a non-root user
+- [ ] **azure.yaml** — valid `azd` project file pointing to the Dockerfile and Bicep
+- [ ] **Bicep template** — provisions Container Apps Environment, Container App, Managed Identity, Log Analytics, and Application Insights
+- [ ] **Managed Identity** — user-assigned identity with `Cognitive Services OpenAI User` role on the AI Foundry resource
+- [ ] **No secrets in code** — authentication uses `DefaultAzureCredential` exclusively; no API keys in environment variables or source
+- [ ] **Health probes** — `/health` (liveness) and `/health/ready` (readiness) return 200 OK
+- [ ] **Deployed and responding** — `azd up` succeeds and the Container App answers chat requests
+- [ ] **Observability** — request traces visible in Application Insights
 
 ## Hints
 

@@ -82,9 +82,9 @@ Save or note the research output path for the next part.
 
 ## Success Criteria
 
-- **Research Document** — Task Researcher produced a document exploring technical approaches
-- **Multiple Options** — At least 2 approaches compared for key architectural decisions
-- **Trade-offs Documented** — Pros, cons, and risks identified for each approach
+- [ ] **Research Document** — Task Researcher produced a document exploring technical approaches
+- [ ] **Multiple Options** — At least 2 approaches compared for key architectural decisions
+- [ ] **Trade-offs Documented** — Pros, cons, and risks identified for each approach
 
 ## Hints
 
