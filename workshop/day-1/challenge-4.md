@@ -39,9 +39,10 @@ Clear context between phases — open a new chat session.
 
 ### Step 2: Attach Your Artifacts
 
-Add the prd document to the chat context:
+Add the context documents to the chat context:
 
 - `docs/prds/<your-prd>.md` — your PRD
+- `.copilot-tracking/research/<date>/<research_file_name>.md` — your research doc from previous step
 
 ### Step 3: Invoke the GitHub Backlog Manager
 

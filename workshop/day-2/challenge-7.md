@@ -83,7 +83,9 @@ create an evaluation dataset for SmartAssist, a customer support agent that rout
 Answer the interview questions fully. Use your judgment on the details — the agent will guide you through what it needs.
 
 > [!IMPORTANT]
-> If asked about Low-Code vs Pro-Code or Azure AI evaluations, say: "Local-only eval using a Python script — simplest option for this workshop. Use Azure OpenAI for any LLM-as-judge calls if needed."
+> 1. If asked about Low-Code vs Pro-Code or Azure AI evaluations, say: "Local-only eval using a Python script — simplest option for this workshop. Use Azure OpenAI for any LLM-as-judge calls if needed."
+>
+> 2. If asked about grounding data, knowledge sources, or external tool/API calls, say: "We are not using any knowledge sources for grounding or external tool/API calls in this workshop. The agent relies solely on its system prompt and LLM capabilities."
 
 After the interview, the agent should generate these artifacts under `data/evaluation/`:
 
@@ -131,7 +133,7 @@ Record your baseline metrics in `data/evaluation/docs/smartassist-eval-baseline.
 
 ![Error Analysis Loop](../assets/reference_images/Evals-Error-Analysis-Loop.png)
 
-Raw scores tell you where you stand; analysis tells you what to do next. This step applies every time you have evaluation results, not just this challenge. Use **Agent Mode**, **Task Researcher** (`/task-research`), or both.
+Raw scores tell you where you stand; analysis tells you what to do next. This step applies every time you have evaluation results, not just this challenge. Use the same **Evaluation Dataset Creator** agent or normal **Agent Mode**.
 
 > [!WARNING]
 > You must manually review the results yourself. AI analysis misses nuance and can misattribute root causes. Look at inputs, responses, and scores side by side — then use agents to go deeper.
