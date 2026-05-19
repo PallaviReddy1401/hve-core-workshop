@@ -173,3 +173,25 @@ git push
 - [ ] **Metrics Categorized** — You can distinguish your primary metrics (release gates) from secondary metrics (improvement signal)
 - [ ] **Evaluation Executed** — You ran the local evaluation flow and results are saved under `data/evaluation/results/`
 - [ ] **Baseline Recorded** — `data/evaluation/docs/smartassist-eval-baseline.md` records the initial baseline with your chosen metrics
+
+## Hints
+
+<details>
+<summary>Hint 1: If the eval script fails to find your agent endpoint</summary>
+
+The prediction script needs to call your running SmartAssist API. The exact endpoint, request format, and startup command will depend on your implementation from Challenges 5–6. Make sure:
+
+1. Your application is running locally (e.g., `python -m smartassist` or `uvicorn smartassist.main:app`)
+2. The prediction script targets the correct URL — check your FastAPI route
+3. The request body format matches your API contract
+
+Below is a sample request — adjust the URL, path, and payload to match your implementation:
+
+```bash
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "I have a billing question", "session_id": "eval-001"}'
+```
+If you get connection errors, confirm the port and path match what your FastAPI app exposes.
+
+</details>

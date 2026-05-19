@@ -70,12 +70,12 @@ docs/
 
 Your PRD must contain:
 
-- **Product Overview** — One-paragraph description of what SmartAssist is
-- **Architecture Decision** —  Technology stack chosen with rationale
-- **Priority** — Each story tagged P0/P1/P2
-- **Technical Constraints** — Python, Azure, Foundry, SOC2/GDPR noted
-- **MVP Boundary** — Clear P0 feature set that forms the MVP
-- **Non-Functional Requirements** — Performance, security, scalability specs
+- [ ] **Product Overview** — One-paragraph description of what SmartAssist is
+- [ ] **Architecture Decision** —  Technology stack chosen with rationale
+- [ ] **Priority** — Each story tagged P0/P1/P2
+- [ ] **Technical Constraints** — Python, Azure, Foundry, SOC2/GDPR noted
+- [ ] **MVP Boundary** — Clear P0 feature set that forms the MVP
+- [ ] **Non-Functional Requirements** — Performance, security, scalability specs
 
 ## Hints
 

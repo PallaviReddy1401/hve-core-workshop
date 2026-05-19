@@ -82,9 +82,9 @@ Save or note the research output path for the next part.
 
 ## Success Criteria
 
-- **Research Document** — Task Researcher produced a document exploring technical approaches
-- **Multiple Options** — At least 2 approaches compared for key architectural decisions
-- **Trade-offs Documented** — Pros, cons, and risks identified for each approach
+- [ ] **Research Document** — Task Researcher produced a document exploring technical approaches
+- [ ] **Multiple Options** — At least 2 approaches compared for key architectural decisions
+- [ ] **Trade-offs Documented** — Pros, cons, and risks identified for each approach
 
 ## Hints
 
@@ -95,7 +95,7 @@ If the researcher output is too generic, provide more specific research question
 
 ```
 Specifically research:
-- How does AgentGroupChat in Microsoft Agent Framework handle multi-turn routing?
+- What are the common patterns for multi-turn routing in multi-agent systems?
 - What are the patterns for agent handoff vs agent delegation?
 - How does FoundryChatClient manage token limits across conversation turns?
 ```

@@ -160,15 +160,14 @@ agent architecture.
 ## Hints
 
 <details>
-<summary>Hint 1: Right-sizing issues for RPI</summary>
+<summary>Hint 1: Right-sizing issues forimplementation</summary>
 
-Each issue should be completable in a single RPI cycle (Research → Plan → Implement → Review). If an issue would take multiple days, break it down further:
+Each issue should be small enough to implement in a single focused session (typically 30–60 minutes of agent-assisted work). If an issue would take multiple days, break it down further:
 
-```
+```text
 Break down any issue estimated as XL into 2-3 smaller issues.
-Each issue should be implementable in a single RPI cycle (typically 30-60 minutes of agent-assisted work).
+Each issue should be implementable in a single focused session with clear start and end points.
 ```
-
 </details>
 
 <details>
