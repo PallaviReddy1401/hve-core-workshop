@@ -80,17 +80,16 @@ Your PRD must contain:
 ## Hints
 
 <details>
-<summary>Hint 1: Getting the right architecture framing</summary>
+<summary>Hint 1: Ensuring PRD-level writing vs BRD-level</summary>
 
-Help the agent understand the target architecture:
+If the PRD Builder output reads like a summary of the BRD rather than a technical product spec, redirect it:
 
 ```
-The system is built using Python as the primary programming language. Architecture:
-- A Router Agent receives all incoming messages and classifies intent
-- Specialized sub-agents handle domains (billing, technical, general)
-- Handoff workflow for escalation to human agents
-- FoundryChatClient connects to Azure OpenAI
-- OpenTelemetry for observability
+This reads like business requirements. Rewrite as a PRD targeting the engineering team:
+- Replace business outcomes with technical capabilities and feature specifications
+- Add a product overview paragraph describing what SmartAssist is technically
+- List technical constraints explicitly (Python, Azure Foundry, SOC2, GDPR)
+- Tag every feature with a priority level (P0, P1, or P2)
 ```
 
 </details>
@@ -112,17 +111,19 @@ MVP (P0) scope is limited to:
 </details>
 
 <details>
-<summary>Hint 3: Acceptance criteria format</summary>
+<summary>Hint 3: Defining a clear MVP boundary</summary>
 
-If user stories lack clear acceptance criteria, ask the agent to reformat:
+If the PRD lacks a clear MVP scope or everything seems equally prioritized, ask the agent to draw the line:
 
 ```text
-Rewrite all user stories with acceptance criteria in Given/When/Then format. Each story must have at least 2 acceptance criteria scenarios.
+Define the MVP boundary explicitly. Mark which features are P0 (must-have for launch), P1 (fast-follow), and P2 (future). The MVP should be the smallest set of P0 features that delivers core value to users. Include a summary table showing the MVP feature set vs deferred items.
 ```
+
+</details>
 
 ## Bonus
 
-- Create a C4 architecture diagram description (context + container level)
-- Define the agent communication protocol (message format between router and specialists)
-- Add a phased rollout plan (MVP → V1.1 → V2.0) with feature mapping
+- Ask the PRD Builder to generate a feature dependency map showing which capabilities must be built before others
+- Add a stakeholder communication matrix to the PRD (who needs to know what, and when)
+- Include a risk register section identifying top technical and product risks with mitigation strategies
 
