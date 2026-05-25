@@ -78,7 +78,9 @@ If anything needs adjustment, ask the agent to revise the plan before proceeding
 Once you are satisfied with the discovery plan, tell the agent to push the issues:
 
 ```
-The discovery plan looks good. Now create all the planned issues in GitHub using MCP tools.
+The discovery plan looks good. Now create all the planned issues in GitHub.
+
+Prefer the GitHub MCP server tools to create the labels, epics, and user stories. If the GitHub MCP server is not available or any MCP tool call fails, fall back to the `gh` CLI to create labels and issues instead.
 
 Create the labels if they do not already exist. Create epics first, then create user stories as sub-issues linked to their parent epics.
 ```
