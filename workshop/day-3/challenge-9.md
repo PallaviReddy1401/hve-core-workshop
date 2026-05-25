@@ -227,7 +227,7 @@ azd auth login
 
 # Create an azd environment and set the resource group
 azd env new smartassist-dev
-azd env set AZURE_RESOURCE_GROUP <your-rg>
+azd env set AZURE_RESOURCE_GROUP <your-rg>  # This can be the resource group which you created in challenge-0 or if you created a new one in step #1 above.
 
 # Provision infrastructure and deploy the container
 azd up
@@ -279,6 +279,55 @@ git commit -m "feat: add Azure Container Apps deployment with Bicep and azd
 
 git push
 ```
+
+### Step 11: Clean Up Azure Resources
+
+Once you have verified the deployment and finished the workshop, tear down the Azure resources to stop incurring costs. The cleanest approach is to delete the entire resource group — this removes the Container App, Container Apps Environment, Managed Identity, Log Analytics workspace, Application Insights, and any RBAC role assignments in one operation.
+
+> **Warning:** Deleting the resource group is **irreversible** and removes **all** resources inside it. Confirm the group name before running, and skip this step if you plan to revisit the deployment later.
+
+If you used the same resource group for the AI Foundry account from Challenge 0 and want to keep it, delete only the SmartAssist-specific resources instead (see the targeted cleanup below).
+
+<details>
+<summary><strong>Windows (PowerShell)</strong></summary>
+
+**Option A — Delete the entire resource group (recommended for workshop cleanup):**
+
+```powershell
+$RG_NAME = "<YOUR RESOURCE GROUP NAME>"   # or the resource group you deployed into
+
+az group delete --name $RG_NAME --yes --no-wait
+```
+
+**Option B — Targeted cleanup via `azd`** (deletes only what `azd up` created):
+
+```powershell
+azd down
+```
+
+</details>
+
+<details>
+<summary><strong>macOS / Linux (bash / zsh)</strong></summary>
+
+**Option A — Delete the entire resource group (recommended for workshop cleanup):**
+
+```bash
+RG_NAME="<YOUR RESOURCE GROUP NAME>"   # or the resource group you deployed into
+
+az group delete --name "$RG_NAME" --yes --no-wait
+```
+
+**Option B — Targeted cleanup via `azd`** (deletes only what `azd up` created):
+
+```bash
+azd down
+```
+
+</details>
+
+
+> **Note:** `--no-wait` returns immediately and lets Azure delete asynchronously. `azd down` also purges soft-deleted resources (e.g., Key Vaults) so their names can be reused.
 
 ## Success Criteria
 
