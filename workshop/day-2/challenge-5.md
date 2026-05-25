@@ -47,6 +47,17 @@ List down all the P0 epics that I can implement in order
 
 The agent will analyze your backlog and return a sequenced list of epics based on priority and dependencies. **Save this list** — you will use it across this challenge and the next.
 
+> [!IMPORTANT]
+> The rough implementation order you want is:
+>
+> 1. Scaffolding / API creation
+> 2. Router agent setup
+> 3. Individual agents (Billing, General, Technical, etc.)
+> 4. Telemetry
+> 5. Security
+>
+> Epics 1–3 are required to get a basic working app. Telemetry, security, and other epics can be implemented later as needed. If the backlog manager's ordered list does not reflect this sequence on a high level, manually choose the order based on the list above.
+
 Pick the **first epic** from the ordered list to begin implementation.
 
 Note the issue number: `#___`
