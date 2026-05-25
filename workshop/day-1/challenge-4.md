@@ -49,19 +49,17 @@ Add the context documents to the chat context:
 Select the **GitHub Backlog Manager** agent, then use this prompt:
 
 ```
-Discover issues from the attached PRD. Create a GitHub backlog for the SmartAssist project.
+Discover issues from the attached PRD. Plan a GitHub backlog for the SmartAssist project.
 
-Use the research findings and architecture decisions to inform issue structure. Create epics as parent issues and user stories as sub-issues.
+Use the research findings and architecture decisions to inform issue structure. Plan epics as parent issues and user stories as sub-issues.
 
-Use "Epic" label for epics and "User Story" label for user stories. Create these labels if they do not already exist. Also apply priority labels (P0-must-have, P1-should-have, P2-future) and domain labels (billing-agent, technical-agent, general-agent, infrastructure, observability) — create any missing labels automatically.
+Use "Epic" label for epics and "User Story" label for user stories. Also plan priority labels (P0-must-have, P1-should-have, P2-future) and domain labels (billing-agent, technical-agent, general-agent, infrastructure, observability).
 
 Each issue must include acceptance criteria in Given/When/Then format.
 
 Focus on P0 items first — these form our MVP sprint.
 
-Use GitHub MCP tools to create the issues directly in the repository.
-
-Important: Label all the MVP stories with "P0" so that these can be implemented for the initial MVP.
+Important: Do NOT create issues in GitHub yet. Only produce the discovery plan so I can review it first. Label all the MVP stories with "P0" so that these can be implemented for the initial MVP.
 ```
 
 ### Step 4: Review the Discovery Plan
@@ -73,15 +71,25 @@ The agent produces `issue-analysis.md` in `.copilot-tracking/github-issues/disco
 - Acceptance criteria match the PRD
 - Issues reflect your ADR decisions
 
-Approve to proceed with issue creation.
+If anything needs adjustment, ask the agent to revise the plan before proceeding.
 
-### Step 5: Verify the Backlog
+### Step 5: Create Issues in GitHub
+
+Once you are satisfied with the discovery plan, tell the agent to push the issues:
+
+```
+The discovery plan looks good. Now create all the planned issues in GitHub using MCP tools.
+
+Create the labels if they do not already exist. Create epics first, then create user stories as sub-issues linked to their parent epics.
+```
+
+### Step 6: Verify the Backlog
 
 ```bash
 gh issue list --state open --limit 30
 ```
 
-### Step 6: Create MVP Milestone and Assign P0 Issues
+### Step 7: Create MVP Milestone and Assign P0 Issues
 
 > [!NOTE]
 > The Backlog Manager agent cannot create milestones. Create the milestone manually first, then use **either** the GitHub Backlog Manager agent **or** GitHub CLI to assign your P0 issues to it.
