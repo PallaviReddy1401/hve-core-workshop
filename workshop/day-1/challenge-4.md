@@ -144,25 +144,30 @@ Your GitHub backlog must contain:
 ## Example Issue Structure
 
 ```markdown
-## Epic: Core Agent Infrastructure
+## Epic: Core API Infrastructure
 
-### Issue: Set up Microsoft Agent Framework project structure
+### Issue: Scaffold FastAPI application and base agent routing
 Labels: infrastructure, P0-must-have
 Milestone: MVP - Sprint 1
 
 **Description:**
-Initialize the Python project with Microsoft Agent Framework,
-configure the development environment, and establish the base
-agent architecture.
+Stand up the FastAPI application skeleton for SmartAssist, wire up
+configuration loading, health endpoints, and a base routing layer
+that incoming customer queries flow through before reaching a
+specialist agent.
 
 **Acceptance Criteria:**
 - Given: A developer clones the repository
-- When: They run `pip install -e .` and `python -m smartassist`
-- Then: The application starts without errors and responds to a health check
+- When: They run `pip install -e .` and `uvicorn smartassist.main:app --reload`
+- Then: The API starts on port 8000 and `GET /health` returns 200 OK
 
-- Given: The project structure exists
-- When: A new specialist agent needs to be added
-- Then: There is a clear pattern to follow (base class, registration, routing)
+- Given: A `POST /chat` request arrives with a `message` and `session_id`
+- When: The router processes the request
+- Then: It returns a JSON response and logs the routed-to agent name
+
+- Given: A new specialist agent needs to be added
+- When: A developer follows the project conventions
+- Then: There is a clear pattern to follow (handler signature, registration, routing rule)
 
 **Dependencies:** None (this is the foundation)
 **Complexity:** Medium
