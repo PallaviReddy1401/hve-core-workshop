@@ -56,8 +56,6 @@ Focus on:
 
 Produce a research document summarizing findings, recommended approaches, trade-offs, and risks.
 
-IMPORTANT: Use only the attached file as context for this research. Do not use workspace files, prior conversation history, or 
-any other external context.
 
 ```
 

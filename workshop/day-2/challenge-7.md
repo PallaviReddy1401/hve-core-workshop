@@ -127,6 +127,10 @@ Follow the commands to run the evaluations and save outputs under `data/evaluati
 > [!IMPORTANT]
 > You may need to run ground truth utterances against your actual system to generate a predictions file (e.g., `predictions.json`) before running the eval script. The exact flow depends on your harness and dataset structure — let the agent guide you through your setup.
 
+> [!TIP]
+> * Make sure your API is running locally and let the agent know about the correct endpoint and port.
+> * If the agent is finding it hard to discover the exact API contracts, point it to your endpoint docs (e.g., `http://localhost:8000/docs`) so it can pick up the correct API specification automatically.
+
 Record your baseline metrics in `data/evaluation/docs/smartassist-eval-baseline.md`. 
 
 ### Step 5: Error Analysis
