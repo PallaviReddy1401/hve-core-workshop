@@ -64,43 +64,6 @@ All HVE-Core state lives in `.copilot-tracking/`:
 | 🔄 Suggest | Discover next work items |
 | 💾 Save | Checkpoint session to memory |
 
-## Microsoft Agent Framework (Python) Basics
-
-```python
-# Install
-pip install agent-framework
-
-# Basic agent
-from agent_framework import Agent
-from agent_framework.foundry import FoundryChatClient
-from azure.identity import AzureCliCredential
-
-agent = Agent(
-    client=FoundryChatClient(credential=AzureCliCredential()),
-    name="MyAgent",
-    instructions="You are a helpful assistant.",
-)
-
-response = await agent.run("Hello!")
-
-# Agent with tools
-from agent_framework import tool
-
-@tool
-def search_kb(query: str) -> str:
-    """Search knowledge base."""
-    return "result"
-
-agent = Agent(client=client, name="Agent", tools=[search_kb])
-```
-
-## Environment Variables
-
-```env
-FOUNDRY_PROJECT_ENDPOINT=https://<project>.services.ai.azure.com
-FOUNDRY_MODEL_DEPLOYMENT_NAME=gpt-4o
-```
-
 ## Useful Commands
 
 ```bash

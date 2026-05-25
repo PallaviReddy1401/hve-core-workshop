@@ -27,7 +27,7 @@ By the end of this challenge, you will be able to:
 
 You will start by using the **GitHub Backlog Manager** agent to get a prioritized, ordered list of P0 epics. Then you'll implement the first epic using the **manual R→P→I→R cycle**, giving you fine-grained control over every phase. The RPI workflow ensures:
 
-- Research verifies Microsoft Agent Framework patterns before writing code
+- Research verifies basic API scaffolding patterns before writing code
 - Planning creates an actionable implementation checklist
 - Implementation follows the plan with precision
 - Review validates everything works
