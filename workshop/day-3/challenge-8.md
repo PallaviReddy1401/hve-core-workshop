@@ -9,7 +9,9 @@
 
 ## Introduction
 
-Up to this point you have built a working agent system. Now you face a common real-world scenario: **brownfield refactoring** — migrating existing, functioning code to a new framework while preserving all behavior. You will refactor SmartAssist to use Microsoft Agent Framework with `FoundryChatClient`. The R→P→I→R workflow applies equally well to refactoring tasks as it does to greenfield work.
+Across Days 1 and 2, you took SmartAssist from raw requirements to a working **MVP** — scoping the problem, planning the architecture, and implementing a multi-agent system end-to-end. That MVP proves the concept, but it is not yet *truly agentic* in a production sense: your agents likely call an LLM client directly (OpenAI SDK, Semantic Kernel, or hand-rolled orchestration), with bespoke routing, memory, and tool-invocation glue.
+
+Challenge 8 shifts gears from **greenfield build** to **brownfield refactor**. You will take the MVP you just built and migrate it onto the **Microsoft Agent Framework (MAF)** using `FoundryChatClient` and the `Agent` abstraction. This is the step that turns your MVP into a real agentic application — one with a standardized agent model, first-class tool calling, conversation state, and a clean path to deploy on **Microsoft Foundry**. The same R→P→I→R workflow you used to build the MVP now applies to refactoring it: research the current code, plan the migration, implement it in phases, and review that behavior is preserved.
 
 ## Learning Objectives
 

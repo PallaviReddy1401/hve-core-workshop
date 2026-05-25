@@ -85,64 +85,157 @@ docker --version        # Should display the installed version
 docker info             # Should show Docker daemon is running
 ```
 
-### Step 7: Create an Azure Resource Group
+### Step 7: Provision Azure Resources (Resource Group + AI Foundry)
 
-Create a dedicated resource group for all workshop resources. Replace `<your-region>` with your preferred Azure region (e.g., `eastus2`, `westus3`, `swedencentral`):
+You will create a dedicated resource group plus an Azure AI Foundry (formerly Azure OpenAI) account, a Foundry project, and a `gpt-4o` model deployment. The model deployment is required for the evaluation challenge (Challenge 7), so set everything up now.
 
-```bash
-az group create --name hve-workshop-rg --location <your-region>
+To keep names consistent across commands, define shell variables once and reference them in every command. Pick the tab matching your shell — the commands are identical apart from variable syntax and line-continuation characters.
+
+**Define your variables** (edit `LOCATION` to your preferred Azure region, e.g. `eastus2`, `westus3`, `swedencentral`; and set the name for your azure resources):
+
+<details>
+<summary><strong>Windows (PowerShell)</strong></summary>
+
+```powershell
+$LOCATION       = "<YOUR LOCATION>"
+$RG_NAME        = "<YOUR RESOURCE GROUP NAME>"
+$AI_ACCOUNT     = "<YOUR FOUNDRY RESOURCE NAME>"        # also used as the custom subdomain (must be globally unique)
+$PROJECT_NAME   = "<YOUR PROJECT NAME>"
+$MODEL_NAME     = "gpt-4o"   # change this if you want to use a different model
+$MODEL_VERSION  = "2024-11-20"  # set the version based on your model selection 
+$DEPLOYMENT     = "gpt-4o" # set your deployment name
 ```
 
-Verify the resource group was created:
+**1. Create the resource group:**
 
-```bash
-az group show --name hve-workshop-rg --query "{name:name, location:location, state:properties.provisioningState}" -o table
+```powershell
+az group create --name $RG_NAME --location $LOCATION
+az group show --name $RG_NAME --query "{name:name, location:location, state:properties.provisioningState}" -o table
 ```
 
-> **Note:** This resource group is used throughout the workshop. Do not delete it until all challenges are complete.
+**2. Create the Azure AI Services (Foundry) account:**
 
-### Step 8: Create an Azure AI Foundry Resource with a Model Deployment
-
-You need an Azure AI Foundry (formerly Azure OpenAI) resource with a model deployment for the evaluation challenge (Challenge 7). Create it now so the deployment is ready by the time you reach that stage.
-
-**Create the Azure AI Services resource:**
-
-```bash
-az cognitiveservices account create \
-  --name hve-workshop-ai \
-  --resource-group hve-workshop-rg \
-  --kind AIServices \
-  --sku S0 \
-  --location <your-region> \
+```powershell
+az cognitiveservices account create `
+  --name $AI_ACCOUNT `
+  --resource-group $RG_NAME `
+  --kind AIServices `
+  --sku S0 `
+  --location $LOCATION `
+  --custom-domain $AI_ACCOUNT `
   --yes
 ```
 
-**Deploy a model (e.g., `gpt-4o`):**
+> **Note:** `--custom-domain` is required so the account can host a Foundry project and use Entra ID auth. The value must be globally unique across Cognitive Services and **cannot be changed after it is set**.
+
+**3. Create a Foundry project inside the account:**
+
+```powershell
+az cognitiveservices account project create `
+  --resource-group $RG_NAME `
+  --name $AI_ACCOUNT `
+  --project-name $PROJECT_NAME `
+  --location $LOCATION
+```
+
+**4. Deploy a `gpt-4o` model:**
+
+```powershell
+az cognitiveservices account deployment create `
+  --name $AI_ACCOUNT `
+  --resource-group $RG_NAME `
+  --deployment-name $DEPLOYMENT `
+  --model-name $MODEL_NAME `
+  --model-version $MODEL_VERSION `
+  --model-format OpenAI `
+  --sku-name Standard `
+  --sku-capacity 10
+```
+
+**5. Retrieve the endpoint for later use:**
+
+```powershell
+az cognitiveservices account show `
+  --name $AI_ACCOUNT `
+  --resource-group $RG_NAME `
+  --query "{endpoint:properties.endpoint}" -o table
+```
+
+</details>
+
+<details>
+<summary><strong>macOS / Linux (bash / zsh)</strong></summary>
+
+```bash
+LOCATION       = "<YOUR LOCATION>"
+RG_NAME        = "<YOUR RESOURCE GROUP NAME>"
+AI_ACCOUNT     = "<YOUR FOUNDRY RESOURCE NAME>"        # also used as the custom subdomain (must be globally unique)
+PROJECT_NAME   = "<YOUR PROJECT NAME>"
+MODEL_NAME     = "gpt-4o"   # change this if you want to use a different model
+MODEL_VERSION  = "2024-11-20"  # set the version based on your model selection 
+DEPLOYMENT     = "gpt-4o" # set your deployment name
+```
+
+**1. Create the resource group:**
+
+```bash
+az group create --name "$RG_NAME" --location "$LOCATION"
+az group show --name "$RG_NAME" --query "{name:name, location:location, state:properties.provisioningState}" -o table
+```
+
+**2. Create the Azure AI Services (Foundry) account:**
+
+```bash
+az cognitiveservices account create \
+  --name "$AI_ACCOUNT" \
+  --resource-group "$RG_NAME" \
+  --kind AIServices \
+  --sku S0 \
+  --location "$LOCATION" \
+  --custom-domain "$AI_ACCOUNT" \
+  --yes
+```
+
+> **Note:** `--custom-domain` is required so the account can host a Foundry project and use Entra ID auth. The value must be globally unique across Cognitive Services and **cannot be changed after it is set**.
+
+**3. Create a Foundry project inside the account:**
+
+```bash
+az cognitiveservices account project create \
+  --resource-group "$RG_NAME" \
+  --name "$AI_ACCOUNT" \
+  --project-name "$PROJECT_NAME" \
+  --location "$LOCATION"
+```
+
+**4. Deploy a `gpt-4o` model:**
 
 ```bash
 az cognitiveservices account deployment create \
-  --name hve-workshop-ai \
-  --resource-group hve-workshop-rg \
-  --deployment-name gpt-4o \
-  --model-name gpt-4o \
-  --model-version "2024-11-20" \
+  --name "$AI_ACCOUNT" \
+  --resource-group "$RG_NAME" \
+  --deployment-name "$DEPLOYMENT" \
+  --model-name "$MODEL_NAME" \
+  --model-version "$MODEL_VERSION" \
   --model-format OpenAI \
   --sku-name Standard \
   --sku-capacity 10
 ```
 
-**Retrieve the endpoint for later use:**
+**5. Retrieve the endpoint for later use:**
 
 ```bash
 az cognitiveservices account show \
-  --name hve-workshop-ai \
-  --resource-group hve-workshop-rg \
+  --name "$AI_ACCOUNT" \
+  --resource-group "$RG_NAME" \
   --query "{endpoint:properties.endpoint}" -o table
 ```
 
-> **Note:** Save the endpoint — you will need it in Challenge 7 for LLM-as-judge evaluation calls. Authentication uses Azure AD (`az login`) — key-based auth is not supported.
+</details>
 
-### Step 9: Enable GitHub MCP Server
+> **Note:** Save the endpoint — you will need it in Challenge 7 for LLM-as-judge evaluation calls. Authentication uses Azure AD (`az login`) — key-based auth is not supported. The resource group is used throughout the workshop; do not delete it until all challenges are complete.
+
+### Step 8: Enable GitHub MCP Server
 
 The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and repositories directly. Enable it in VS Code:
 
@@ -163,7 +256,7 @@ The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and reposit
 
 > **Note:** Requires VS Code 1.101 or later for remote MCP and OAuth support.
 
-### Step 10: Fork the Workshop Repository
+### Step 9: Fork the Workshop Repository
 
 Fork the workshop repository to your own GitHub account:
 
@@ -178,7 +271,7 @@ Verify the fork:
 git remote -v   # Should show your fork as 'origin'
 ```
 
-### Step 11: Verify HVE-Core Agents
+### Step 10: Verify HVE-Core Agents
 
 Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in the agent picker:
 
