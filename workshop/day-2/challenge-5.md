@@ -62,6 +62,9 @@ Pick the **first epic** from the ordered list to begin implementation.
 
 Note the issue number: `#___`
 
+> [!NOTE]
+> Before starting the implementation cycle below, review the `.github/copilot-instructions.md` file at the root of this repository. It defines project structure rules (no code files in the root), read-only folder boundaries, and coding conventions (async route handlers, RESTful design, Pydantic validation, UUID v4 identifiers, ISO 8601 dates, PEP 8 naming) that the implementation phase must follow.
+
 ### Step 2: Manual R→P→I→R Cycle — First Epic
 
 > **Pick the first epic** from your ordered list. You will implement it using the manual R→P→I→R cycle, running each phase individually.
