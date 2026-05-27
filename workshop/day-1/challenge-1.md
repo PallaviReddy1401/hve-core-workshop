@@ -39,7 +39,7 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`).
 
 Attach `workshop/assets/raw-requirements.md` to your chat.
 
-> **Note:** If you prefer to derive the BRD from the original meeting transcripts, attach files from `workshop/assets/meeting_transcripts/` instead (or in addition to the raw requirements as supporting evidence).
+> **Note:** If you prefer to derive the BRD from the original meeting transcripts, attach files from `workshop/assets/meeting_transcripts/` instead (or in addition to the raw requirements as supporting evidence). A Statement of Work (SOW) document can also be used as a source for generating your BRD.
 
 ### Step 3: Invoke the BRD Builder
 
