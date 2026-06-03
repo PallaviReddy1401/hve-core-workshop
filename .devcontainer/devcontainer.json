@@ -21,7 +21,8 @@
         "github.github-mcp-server"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "chat.mcp.gallery.enabled": true
       }
     }
   },
