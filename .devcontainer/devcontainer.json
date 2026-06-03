@@ -5,6 +5,7 @@
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/azure/azure-dev/azd:latest": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "moby": false
     }
@@ -16,7 +17,8 @@
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "ms-python.python",
-        "GitHub.vscode-pull-request-github"
+        "GitHub.vscode-pull-request-github",
+        "github.github-mcp-server"
       ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python"
