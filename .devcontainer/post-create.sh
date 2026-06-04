@@ -2,19 +2,17 @@
 set -e
 
 echo "=== HVE-Core Workshop: Post-Create Setup ==="
-
+# Upgrade az-cli
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 # Upgrade pip
 python -m pip install --upgrade pip
-
-# Upgrade Azure CLI to fix module-loading errors (monitor, rdbms)
-pip install --upgrade azure-cli 2>/dev/null || true
 
 # Verify tool versions
 echo ""
 echo "--- Environment Verification ---"
 echo "Python:    $(python --version)"
 echo "pip:       $(pip --version | awk '{print $2}')"
-echo "Azure CLI: $(az version --query \"\\\"azure-cli\\\"\" -o tsv 2>/dev/null || az version -o yaml | head -1)"
+echo "Azure CLI: $(az version)"
 echo "azd:       $(azd version)"
 echo "GitHub CLI: $(gh --version | head -1)"
 echo "Docker:    $(docker --version)"
