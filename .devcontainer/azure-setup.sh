@@ -15,6 +15,10 @@ read -p "Model version [2024-11-20]: " MODEL_VERSION
 MODEL_VERSION="${MODEL_VERSION:-2024-11-20}"
 read -p "Deployment name [gpt-4o]: " DEPLOYMENT
 DEPLOYMENT="${DEPLOYMENT:-gpt-4o}"
+: "${LOCATION:?Azure region is required}"
+: "${RG_NAME:?Resource group name is required}"
+: "${AI_ACCOUNT:?AI Foundry account name is required}"
+: "${PROJECT_NAME:?Project name is required}"
 
 echo ""
 echo "--- Creating resource group ---"
