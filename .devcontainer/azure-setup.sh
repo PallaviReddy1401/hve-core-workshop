@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 echo "=== Azure Resource Provisioning for HVE-Core Workshop ==="
 echo ""
