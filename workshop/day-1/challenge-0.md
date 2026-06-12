@@ -7,7 +7,7 @@
 
 ## Introduction
 
-Before diving into HVE-Core workflows, you need a properly configured development environment. This challenge ensures everyone starts from the same baseline with all required tools installed, authenticated, and ready to use. You will verify your IDE setup, CLI tools, cloud services, and MCP integrations that power the entire workshop.
+Before diving into HVE-Core workflows, you need a properly configured development environment. This challenge ensures everyone starts from the same baseline with all required tools installed, authenticated, and ready to use.
 
 ## Learning Objectives
 
@@ -22,222 +22,52 @@ By the end of this challenge, you will be able to:
 
 ## Instructions
 
-### Step 1: Verify VS Code Extensions
+### Step 1: Fork the Workshop Repository
 
-Open VS Code and confirm these extensions are installed:
+Fork the workshop repository to your own GitHub account. This gives you your own copy that you can open locally or in a Codespace.
 
-- **HVE Core - All** (`ise-hve-essentials.hve-core-all`) — The core HVE extension
-- **GitHub Copilot** — AI pair programming
-- **GitHub Copilot Chat** — Chat interface for Copilot
-- **Python** — Python language support
+Install the GitHub CLI if needed: <https://cli.github.com/>
 
 ```bash
-code --list-extensions | Select-String "hve-core|copilot|python"
-```
-For MacOS -
-```bash
-code --list-extensions | grep -iE "hve-core|copilot|python"
+gh auth login               # If not already authenticated
+gh repo fork https://github.com/mcaps-microsoft/hve-core-workshop --clone
+cd hve-core-workshop
 ```
 
-### Step 2: Verify Python Environment
+**Or using git directly:**
 
-Install Python 3.11+ if needed: <https://www.python.org/downloads/>
-
-```bash
-python --version        # Should be 3.11+
-pip --version           # Should be available
-```
-
-### Step 3: Verify Azure CLI
-
-Install if needed: <https://learn.microsoft.com/cli/azure/install-azure-cli>
+1. Fork the repository via the GitHub UI (click **Fork** on the repo page)
+2. Clone your fork:
 
 ```bash
-az account show         # Should display your subscription
-az login                # If not authenticated
+git clone https://github.com/<YOUR-GITHUB-USERNAME>/hve-core-workshop.git
+cd hve-core-workshop
 ```
 
-### Step 4: Verify Azure Developer CLI (azd)
-
-Install if needed: <https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd>
+Verify the fork:
 
 ```bash
-azd version             # Should display the installed version
-azd auth login          # If not authenticated
+git remote -v   # Should show your fork as 'origin'
 ```
 
-### Step 5: Verify GitHub CLI
+### Step 2: Choose Your Setup Path
 
-Install if needed: <https://cli.github.com/>
+| Path | Best for | What you get |
+|------|----------|--------------|
+| **[Option A — Dev Container](setup/devcontainer-setup.md)** | Fastest start, consistent environment | All tools pre-installed; just authenticate and provision Azure resources |
+| **[Option B — Local Machine](setup/local-setup.md)** | Full control, no container overhead | Manual installation of each prerequisite |
 
-```bash
-gh auth status          # Should show authenticated
-```
+Follow the instructions in your chosen path, then return here for the remaining common steps.
 
-### Step 6: Verify Docker
+---
 
-Docker is used in Challenge 9 to build and test the container locally before deploying to Azure.
+### Step 3: Enable GitHub MCP Server
 
-Install if needed: <https://docs.docker.com/get-started/get-docker/>
+The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and repositories directly.
 
-```bash
-docker --version        # Should display the installed version
-docker info             # Should show Docker daemon is running
-```
+**If running locally or in a local dev container:**
 
-### Step 7: Provision Azure Resources (Resource Group + AI Foundry)
-
-You will create a dedicated resource group plus an Azure AI Foundry (formerly Azure OpenAI) account, a Foundry project, and a `gpt-4o` model deployment. The model deployment is required for the evaluation challenge (Challenge 7), so set everything up now.
-
-To keep names consistent across commands, define shell variables once and reference them in every command. Pick the tab matching your shell — the commands are identical apart from variable syntax and line-continuation characters.
-
-**Define your variables** (edit `LOCATION` to your preferred Azure region, e.g. `eastus2`, `westus3`, `swedencentral`; and set the name for your azure resources):
-
-<details>
-<summary><strong>Windows (PowerShell)</strong></summary>
-
-```powershell
-$LOCATION       = "<YOUR LOCATION>"
-$RG_NAME        = "<YOUR RESOURCE GROUP NAME>"
-$AI_ACCOUNT     = "<YOUR FOUNDRY RESOURCE NAME>"        # also used as the custom subdomain (must be globally unique)
-$PROJECT_NAME   = "<YOUR PROJECT NAME>"
-$MODEL_NAME     = "gpt-4o"   # change this if you want to use a different model
-$MODEL_VERSION  = "2024-11-20"  # set the version based on your model selection 
-$DEPLOYMENT     = "gpt-4o" # set your deployment name
-```
-
-**1. Create the resource group:**
-
-```powershell
-az group create --name $RG_NAME --location $LOCATION
-az group show --name $RG_NAME --query "{name:name, location:location, state:properties.provisioningState}" -o table
-```
-
-**2. Create the Azure AI Services (Foundry) account:**
-
-```powershell
-az cognitiveservices account create `
-  --name $AI_ACCOUNT `
-  --resource-group $RG_NAME `
-  --kind AIServices `
-  --sku S0 `
-  --location $LOCATION `
-  --custom-domain $AI_ACCOUNT `
-  --yes
-```
-
-> **Note:** `--custom-domain` is required so the account can host a Foundry project and use Entra ID auth. The value must be globally unique across Cognitive Services and **cannot be changed after it is set**.
-
-**3. Create a Foundry project inside the account:**
-
-```powershell
-az cognitiveservices account project create `
-  --resource-group $RG_NAME `
-  --name $AI_ACCOUNT `
-  --project-name $PROJECT_NAME `
-  --location $LOCATION
-```
-
-**4. Deploy a `gpt-4o` model:**
-
-```powershell
-az cognitiveservices account deployment create `
-  --name $AI_ACCOUNT `
-  --resource-group $RG_NAME `
-  --deployment-name $DEPLOYMENT `
-  --model-name $MODEL_NAME `
-  --model-version $MODEL_VERSION `
-  --model-format OpenAI `
-  --sku-name Standard `
-  --sku-capacity 10
-```
-
-**5. Retrieve the endpoint for later use:**
-
-```powershell
-az cognitiveservices account show `
-  --name $AI_ACCOUNT `
-  --resource-group $RG_NAME `
-  --query "{endpoint:properties.endpoint}" -o table
-```
-
-</details>
-
-<details>
-<summary><strong>macOS / Linux (bash / zsh)</strong></summary>
-
-```bash
-LOCATION       = "<YOUR LOCATION>"
-RG_NAME        = "<YOUR RESOURCE GROUP NAME>"
-AI_ACCOUNT     = "<YOUR FOUNDRY RESOURCE NAME>"        # also used as the custom subdomain (must be globally unique)
-PROJECT_NAME   = "<YOUR PROJECT NAME>"
-MODEL_NAME     = "gpt-4o"   # change this if you want to use a different model
-MODEL_VERSION  = "2024-11-20"  # set the version based on your model selection 
-DEPLOYMENT     = "gpt-4o" # set your deployment name
-```
-
-**1. Create the resource group:**
-
-```bash
-az group create --name "$RG_NAME" --location "$LOCATION"
-az group show --name "$RG_NAME" --query "{name:name, location:location, state:properties.provisioningState}" -o table
-```
-
-**2. Create the Azure AI Services (Foundry) account:**
-
-```bash
-az cognitiveservices account create \
-  --name "$AI_ACCOUNT" \
-  --resource-group "$RG_NAME" \
-  --kind AIServices \
-  --sku S0 \
-  --location "$LOCATION" \
-  --custom-domain "$AI_ACCOUNT" \
-  --yes
-```
-
-> **Note:** `--custom-domain` is required so the account can host a Foundry project and use Entra ID auth. The value must be globally unique across Cognitive Services and **cannot be changed after it is set**.
-
-**3. Create a Foundry project inside the account:**
-
-```bash
-az cognitiveservices account project create \
-  --resource-group "$RG_NAME" \
-  --name "$AI_ACCOUNT" \
-  --project-name "$PROJECT_NAME" \
-  --location "$LOCATION"
-```
-
-**4. Deploy a `gpt-4o` model:**
-
-```bash
-az cognitiveservices account deployment create \
-  --name "$AI_ACCOUNT" \
-  --resource-group "$RG_NAME" \
-  --deployment-name "$DEPLOYMENT" \
-  --model-name "$MODEL_NAME" \
-  --model-version "$MODEL_VERSION" \
-  --model-format OpenAI \
-  --sku-name Standard \
-  --sku-capacity 10
-```
-
-**5. Retrieve the endpoint for later use:**
-
-```bash
-az cognitiveservices account show \
-  --name "$AI_ACCOUNT" \
-  --resource-group "$RG_NAME" \
-  --query "{endpoint:properties.endpoint}" -o table
-```
-
-</details>
-
-> **Note:** Save the endpoint — you will need it in Challenge 7 for LLM-as-judge evaluation calls. Authentication uses Azure AD (`az login`) — key-based auth is not supported. The resource group is used throughout the workshop; do not delete it until all challenges are complete.
-
-### Step 8: Enable GitHub MCP Server
-
-The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and repositories directly. Enable it in VS Code:
+The GitHub MCP server extension should already be installed (the dev container installs it automatically). If running on a local machine without the dev container, install it manually:
 
 1. Open the **Extensions** view (`Cmd+Shift+X` / `Ctrl+Shift+X`)
 2. In the search bar, type `@mcp github`
@@ -256,22 +86,19 @@ The GitHub MCP server lets Copilot interact with GitHub issues, PRs, and reposit
 
 > **Note:** Requires VS Code 1.101 or later for remote MCP and OAuth support.
 
-### Step 9: Fork the Workshop Repository
+#### If running on GitHub Codespaces
 
-Fork the workshop repository to your own GitHub account:
+The GitHub MCP server **extension** is not yet supported on Codespaces. Instead, this repository includes a `.vscode/mcp.json` file that configures the MCP server via the CLI (`npx @modelcontextprotocol/server-github`). The `GITHUB_TOKEN` is automatically supplied by the Codespaces environment — no changes to the file are required.
 
-```bash
-gh repo fork https://github.com/mcaps-microsoft/hve-core-workshop --clone
-cd hve-core-workshop
-```
+To activate it:
 
-Verify the fork:
+1. Open the Copilot Chat panel and switch to **Agent mode**
+2. Click the **MCP tools** icon (or open the Command Palette → **MCP: List Servers**)
+3. Start the `github` server if it is not already running
 
-```bash
-git remote -v   # Should show your fork as 'origin'
-```
+Verify the server shows a green/running status before proceeding.
 
-### Step 10: Verify HVE-Core Agents
+### Step 4: Verify HVE-Core Agents
 
 Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in the agent picker:
 
@@ -288,17 +115,19 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 
 ## Success Criteria
 
+- [ ] Workshop repository forked and cloned
 - [ ] HVE Core - All extension active in VS Code
 - [ ] Python 3.11+ available
 - [ ] Azure CLI authenticated with active subscription
 - [ ] Azure Developer CLI (`azd`) installed and authenticated
-- [ ] Resource group `hve-workshop-rg` created
+- [ ] Resource group created in Azure
 - [ ] Azure AI Foundry resource created with a `gpt-4o` deployment
 - [ ] GitHub CLI authenticated
 - [ ] Docker installed and daemon running
 - [ ] GitHub MCP server configured in VS Code
-- [ ] Workshop repository forked and cloned
 - [ ] All HVE Core agents visible in Copilot Chat
+
+> **Tip:** If you used the dev container path (Option A), all tool installation criteria are satisfied automatically — just verify authentication and Azure resource provisioning.
 
 ## Troubleshooting
 
@@ -306,6 +135,7 @@ Open GitHub Copilot Chat (`Ctrl+Alt+I`) and verify you can see these agents in t
 |-------|----------|
 | HVE-Core agents not appearing | Reload VS Code window (`Ctrl+Shift+P` → "Reload Window") |
 | Azure CLI not authenticated | Run `az login` and select your subscription |
+| `az login` fails in Codespaces | Corp/non-prod subscriptions are blocked. Use a personal subscription or the [$150 Azure Credit](https://my.visualstudio.com/Benefits) (Microsoft FTEs) |
 | Azure Developer CLI not found | Install from <https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd> |
 | Resource group creation failed | Ensure your subscription is active: `az account show` |
 | AI Foundry deployment failed | Check region availability and quota: `az cognitiveservices account list-skus --kind OpenAI --location <region>` |

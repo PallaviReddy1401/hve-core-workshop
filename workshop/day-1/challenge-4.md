@@ -24,7 +24,7 @@ By the end of this challenge, you will be able to:
 
 ## Prerequisites
 
-You need the **GitHub MCP Server** configured and running in VS Code. If you haven't set this up yet, refer to [Challenge 0, Step 5](challenge-0.md#step-5-enable-github-mcp-server) for instructions.
+You need the **GitHub MCP Server** configured and running in VS Code. If you haven't set this up yet, refer to [Challenge 0, Step 3](challenge-0.md#step-3-enable-github-mcp-server) for instructions.
 
 ### Enable Issues on Your Repository
 
@@ -214,7 +214,7 @@ If the GitHub Backlog Manager cannot create issues:
 1. Verify the GitHub MCP server is running — check the MCP status in Copilot Chat
 2. Ensure you're in Agent mode (toggle in the Copilot Chat input area)
 3. Try a simpler request first: "Create a single test issue titled 'Test' in my repo"
-4. If the MCP server won't start, revisit [Challenge 0, Step 5](challenge-0.md#step-5-enable-github-mcp-server)
+4. If the MCP server won't start, revisit [Challenge 0, Step 3](challenge-0.md#step-3-enable-github-mcp-server)
 
 </details>
 
