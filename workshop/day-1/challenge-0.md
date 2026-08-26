@@ -52,6 +52,9 @@ git remote -v   # Should show your fork as 'origin'
 
 ### Step 2: Choose Your Setup Path
 
+> [!NOTE]
+> If Python, Azure CLI, Azure Developer CLI are installed locally and your Foundry resource is already provisioned, choose **Option B**. If you do not have the required tooling installed, **Option A** is the preferred path.
+
 | Path | Best for | What you get |
 |------|----------|--------------|
 | **[Option A — Dev Container](setup/devcontainer-setup.md)** | Fastest start, consistent environment | All tools pre-installed; just authenticate and provision Azure resources |
