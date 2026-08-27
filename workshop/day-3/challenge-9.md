@@ -77,6 +77,17 @@ Collect these values before you begin:
 
 ## Instructions
 
+### Approved Package Feeds
+
+Your organization blocks direct access to public package registries. Use only these approved package feed proxies during this challenge:
+
+| Package manager | Approved feed                                                         |
+|-----------------|-----------------------------------------------------------------------|
+| PyPI            | `https://packagefeedproxy.microsoft.io/pypi/simple`                   |
+| NuGet           | `https://packagefeedproxy.microsoft.io/nuget/v3/index.json`           |
+
+The repository-level `NuGet.Config` already configures the approved NuGet feed. Docker builds run outside the development container, so the Dockerfile must configure the approved PyPI feed explicitly.
+
 ### Step 1: Verify Azure Prerequisites
 
 Confirm your Azure subscription and existing AI Foundry resources.
@@ -108,7 +119,8 @@ Requirements:
 - Use python:3.12-slim as the base image
 - Install system dependencies (gcc) needed by Python packages
 - Copy pyproject.toml/requirements.txt and src/ into the image
-- Install the project with pip install --no-cache-dir .
+- Set PIP_INDEX_URL to https://packagefeedproxy.microsoft.io/pypi/simple
+- Install the project with pip install --no-cache-dir . using only the configured package feed
 - Create a non-root user and switch to it
 - Expose port 8000
 - Start with: uvicorn <Fast API App> --host 0.0.0.0 --port 8000
@@ -332,6 +344,7 @@ azd down
 ## Success Criteria
 
 - [ ] **Dockerfile** — builds a working container image with a non-root user
+- [ ] **Approved package feed** — Docker installs Python dependencies only from the approved PyPI proxy
 - [ ] **azure.yaml** — valid `azd` project file pointing to the Dockerfile and Bicep
 - [ ] **Bicep template** — provisions Container Apps Environment, Container App, Managed Identity, Log Analytics, and Application Insights
 - [ ] **Managed Identity** — user-assigned identity with `Cognitive Services OpenAI User` role on the AI Foundry resource
@@ -349,6 +362,8 @@ azd down
 FROM python:3.12-slim AS base
 
 WORKDIR /app
+
+ENV PIP_INDEX_URL=https://packagefeedproxy.microsoft.io/pypi/simple
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc && \
