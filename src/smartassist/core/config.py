@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     model_provider: ModelProviderMode = ModelProviderMode.STUB
     session_ttl_seconds: int = Field(default=1800, ge=60, le=86400)
     max_message_length: int = Field(default=4000, ge=1, le=32000)
+    routing_minimum_confidence: float = Field(default=0.7, ge=0, le=1)
     azure_openai_endpoint: str | None = None
     azure_openai_deployment: str | None = None
     azure_openai_api_version: str = "2024-10-21"

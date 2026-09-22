@@ -10,13 +10,18 @@ import pytest
 
 from smartassist.core.config import Settings
 from smartassist.core.service import ConversationService
+from smartassist.core.specialists import ModelSpecialist, SpecialistRegistry
 from smartassist.domain.errors import ConversationTerminalError, ModelUnavailableError
 from smartassist.domain.models import (
+    Category,
+    ClassificationResult,
     ConversationRecord,
     ConversationState,
     CustomerMessageRequest,
     DataClassification,
-    ModelResult,
+    Disposition,
+    SpecialistRequest,
+    SpecialistResponse,
     utc_now,
 )
 from smartassist.infrastructure.repository import InMemoryConversationRepository
@@ -29,22 +34,59 @@ class CoordinatedProvider:
         self.active_calls = 0
         self.maximum_active_calls = 0
 
-    async def generate(
+    async def classify(
         self, conversation: ConversationRecord, message: str
-    ) -> ModelResult:
+    ) -> ClassificationResult:
+        return ClassificationResult(
+            category=Category.GENERAL,
+            confidence=1,
+            ambiguous=False,
+            multi_domain=False,
+            escalation_required=False,
+            reason_code="test",
+            classifier_version="test",
+            prompt_version="test",
+        )
+
+    async def respond(
+        self,
+        request: SpecialistRequest,
+        *,
+        specialist_id: str,
+        specialist_version: str,
+        instructions: str,
+        prompt_version: str,
+    ) -> SpecialistResponse:
         self.active_calls += 1
         self.maximum_active_calls = max(self.maximum_active_calls, self.active_calls)
         await asyncio.sleep(0.01)
         self.active_calls -= 1
-        return ModelResult(content=f"received:{message}")
+        return SpecialistResponse(
+            specialist_id=specialist_id,
+            specialist_version=specialist_version,
+            content=f"received:{request.current_message}",
+            disposition=Disposition.ANSWERED,
+            prompt_version=prompt_version,
+        )
 
 
 class FailingProvider:
     """Provider that returns an explicit dependency failure."""
 
-    async def generate(
+    async def classify(
         self, conversation: ConversationRecord, message: str
-    ) -> ModelResult:
+    ) -> ClassificationResult:
+        raise ModelUnavailableError("Model unavailable.")
+
+    async def respond(
+        self,
+        request: SpecialistRequest,
+        *,
+        specialist_id: str,
+        specialist_version: str,
+        instructions: str,
+        prompt_version: str,
+    ) -> SpecialistResponse:
         raise ModelUnavailableError("Model unavailable.")
 
 
@@ -63,11 +105,28 @@ async def create_record(
     return record
 
 
+def create_registry(provider: CoordinatedProvider | FailingProvider) -> SpecialistRegistry:
+    """Create the default test specialist registry."""
+    registry = SpecialistRegistry()
+    for category in Category:
+        registry.register(
+            ModelSpecialist(
+                category,
+                f"{category.value}-test",
+                "Test specialist.",
+                provider,
+            )
+        )
+    return registry
+
+
 @pytest.mark.asyncio
 async def test_same_conversation_requests_are_serialized() -> None:
     repository = InMemoryConversationRepository()
     provider = CoordinatedProvider()
-    service = ConversationService(repository, provider, Settings())
+    service = ConversationService(
+        repository, provider, create_registry(provider), Settings()
+    )
     record = await create_record(repository)
 
     await asyncio.gather(
@@ -93,7 +152,10 @@ async def test_same_conversation_requests_are_serialized() -> None:
 @pytest.mark.asyncio
 async def test_terminal_conversation_rejects_new_message() -> None:
     repository = InMemoryConversationRepository()
-    service = ConversationService(repository, CoordinatedProvider(), Settings())
+    provider = CoordinatedProvider()
+    service = ConversationService(
+        repository, provider, create_registry(provider), Settings()
+    )
     record = await create_record(repository, state=ConversationState.RESOLVED)
 
     with pytest.raises(ConversationTerminalError):
@@ -108,7 +170,10 @@ async def test_terminal_conversation_rejects_new_message() -> None:
 @pytest.mark.asyncio
 async def test_provider_failure_does_not_persist_messages() -> None:
     repository = InMemoryConversationRepository()
-    service = ConversationService(repository, FailingProvider(), Settings())
+    provider = FailingProvider()
+    service = ConversationService(
+        repository, provider, create_registry(provider), Settings()
+    )
     record = await create_record(repository)
 
     with pytest.raises(ModelUnavailableError):
@@ -121,4 +186,3 @@ async def test_provider_failure_does_not_persist_messages() -> None:
 
     stored = await repository.get(record.conversation_id)
     assert stored.messages == []
-

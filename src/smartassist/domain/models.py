@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import StrEnum
+from typing import Any
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -42,6 +43,14 @@ class Category(StrEnum):
     BILLING = "billing"
     TECH_SUPPORT = "tech_support"
     GENERAL = "general"
+
+
+class RoutingOutcome(StrEnum):
+    """Policy-approved routing outcomes."""
+
+    ROUTE = "route"
+    CLARIFY = "clarify"
+    ESCALATE = "escalate"
 
 
 class DataClassification(StrEnum):
@@ -128,6 +137,60 @@ class ModelResult(BaseModel):
     disposition: Disposition = Disposition.ANSWERED
     category: Category = Category.GENERAL
     specialist_id: str = "foundation-stub"
+
+
+class ClassificationResult(BaseModel):
+    """Schema-constrained intent classification returned by the model."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    category: Category | None
+    confidence: float = Field(ge=0, le=1)
+    ambiguous: bool
+    multi_domain: bool
+    escalation_required: bool
+    reason_code: str = Field(min_length=1, max_length=64)
+    clarification_question: str | None = Field(default=None, max_length=500)
+    classifier_version: str = Field(min_length=1, max_length=64)
+    prompt_version: str = Field(min_length=1, max_length=64)
+
+
+class RoutingDecision(BaseModel):
+    """Deterministic policy result for a model classification."""
+
+    outcome: RoutingOutcome
+    category: Category | None = None
+    reason_code: str
+    customer_message: str | None = None
+
+
+class SpecialistRequest(BaseModel):
+    """Versioned, minimized input passed to a specialist."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    contract_version: str = "1.0"
+    conversation_id: UUID
+    category: Category
+    current_message: str
+    conversation_context: list[str] = Field(default_factory=list)
+    approved_evidence: list[str] = Field(default_factory=list)
+    request_metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class SpecialistResponse(BaseModel):
+    """Versioned output returned by every registered specialist."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    contract_version: str = "1.0"
+    specialist_id: str = Field(min_length=1, max_length=128)
+    specialist_version: str = Field(min_length=1, max_length=64)
+    content: str = Field(min_length=1)
+    disposition: Disposition
+    evidence_references: list[str] = Field(default_factory=list)
+    escalation_reason: str | None = Field(default=None, max_length=256)
+    prompt_version: str = Field(min_length=1, max_length=64)
 
 
 class ErrorDetail(BaseModel):

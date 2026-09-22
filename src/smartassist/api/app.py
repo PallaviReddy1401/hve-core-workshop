@@ -11,8 +11,10 @@ from fastapi.responses import JSONResponse
 
 from smartassist.core.config import ModelProviderMode, Settings, get_settings
 from smartassist.core.service import ConversationService
+from smartassist.core.specialists import ModelSpecialist, SpecialistRegistry
 from smartassist.domain.errors import SmartAssistError
 from smartassist.domain.models import (
+    Category,
     ConversationCreatedResponse,
     CreateConversationRequest,
     CustomerMessageRequest,
@@ -41,7 +43,32 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if application_settings.model_provider is ModelProviderMode.AZURE
         else StubModelProvider()
     )
-    service = ConversationService(repository, provider, application_settings)
+    registry = SpecialistRegistry()
+    registry.register(
+        ModelSpecialist(
+            Category.BILLING,
+            "billing",
+            "Provide only grounded billing-policy assistance.",
+            provider,
+        )
+    )
+    registry.register(
+        ModelSpecialist(
+            Category.TECH_SUPPORT,
+            "tech-support",
+            "Provide grounded technical troubleshooting with concise next steps.",
+            provider,
+        )
+    )
+    registry.register(
+        ModelSpecialist(
+            Category.GENERAL,
+            "general",
+            "Provide concise assistance for supported general inquiries.",
+            provider,
+        )
+    )
+    service = ConversationService(repository, provider, registry, application_settings)
     app = FastAPI(title="SmartAssist API", version="1.0.0")
     app.state.service = service
 

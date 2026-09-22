@@ -7,19 +7,26 @@ from hashlib import sha256
 from uuid import UUID
 
 from smartassist.core.config import Settings
+from smartassist.core.routing import RoutingPolicy
+from smartassist.core.specialists import SpecialistRegistry
 from smartassist.domain.errors import (
     ConversationTerminalError,
     IdempotencyConflictError,
     MessageTooLargeError,
 )
 from smartassist.domain.models import (
+    Category,
     ConversationCreatedResponse,
     ConversationRecord,
     ConversationState,
     CreateConversationRequest,
     CustomerMessageRequest,
+    Disposition,
     MessageRecord,
     MessageResponse,
+    ModelResult,
+    RoutingOutcome,
+    SpecialistRequest,
     utc_now,
 )
 from smartassist.infrastructure.model_provider import ModelProvider
@@ -40,10 +47,13 @@ class ConversationService:
         self,
         repository: ConversationRepository,
         model_provider: ModelProvider,
+        specialist_registry: SpecialistRegistry,
         settings: Settings,
     ) -> None:
         self._repository = repository
         self._model_provider = model_provider
+        self._specialist_registry = specialist_registry
+        self._routing_policy = RoutingPolicy(settings.routing_minimum_confidence)
         self._settings = settings
 
     async def create_conversation(
@@ -97,7 +107,58 @@ class ConversationService:
                     return prior.response
 
             customer_message = MessageRecord(sender="customer", content=request.content)
-            result = await self._model_provider.generate(conversation, request.content)
+            classification = await self._model_provider.classify(
+                conversation, request.content
+            )
+            decision = self._routing_policy.evaluate(classification)
+            if decision.outcome is RoutingOutcome.CLARIFY:
+                result = ModelResult(
+                    content=decision.customer_message
+                    or "Could you provide more detail about your request?",
+                    state=ConversationState.AWAITING_CLARIFICATION,
+                    disposition=Disposition.CLARIFICATION_REQUIRED,
+                    category=classification.category or Category.GENERAL,
+                    specialist_id="routing-policy",
+                )
+            elif decision.outcome is RoutingOutcome.ESCALATE:
+                result = ModelResult(
+                    content=decision.customer_message
+                    or "Human support is required for this request.",
+                    state=ConversationState.ESCALATION_REQUIRED,
+                    disposition=Disposition.ESCALATION_REQUIRED,
+                    category=classification.category or Category.GENERAL,
+                    specialist_id="routing-policy",
+                )
+            else:
+                if decision.category is None:
+                    raise RuntimeError("A routed decision must include a category.")
+                specialist = self._specialist_registry.resolve(decision.category)
+                specialist_response = await specialist.handle(
+                    SpecialistRequest(
+                        conversation_id=conversation.conversation_id,
+                        category=decision.category,
+                        current_message=request.content,
+                        conversation_context=[
+                            item.content for item in conversation.messages[-6:]
+                        ],
+                        request_metadata={
+                            "correlation_id": str(correlation_id),
+                            "classifier_version": classification.classifier_version,
+                            "classifier_prompt_version": classification.prompt_version,
+                            "routing_reason": decision.reason_code,
+                        },
+                    )
+                )
+                result = ModelResult(
+                    content=specialist_response.content,
+                    state=_state_for_disposition(specialist_response.disposition),
+                    disposition=specialist_response.disposition,
+                    category=decision.category,
+                    specialist_id=(
+                        f"{specialist_response.specialist_id}:"
+                        f"{specialist_response.specialist_version}"
+                    ),
+                )
             assistant_message = MessageRecord(sender="assistant", content=result.content)
             now = utc_now()
             conversation.messages.extend([customer_message, assistant_message])
@@ -123,3 +184,15 @@ class ConversationService:
                     IdempotencyRecord(fingerprint=fingerprint, response=response),
                 )
             return response
+
+
+def _state_for_disposition(disposition: Disposition) -> ConversationState:
+    if disposition is Disposition.CLARIFICATION_REQUIRED:
+        return ConversationState.AWAITING_CLARIFICATION
+    if disposition is Disposition.ESCALATION_REQUIRED:
+        return ConversationState.ESCALATION_REQUIRED
+    if disposition is Disposition.RESOLVED:
+        return ConversationState.RESOLVED
+    if disposition in {Disposition.RETRYABLE_ERROR, Disposition.FAILED}:
+        return ConversationState.FAILED
+    return ConversationState.ACTIVE
