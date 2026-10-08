@@ -11,6 +11,7 @@ from fastapi.responses import JSONResponse
 
 from smartassist.core.config import ModelProviderMode, Settings, get_settings
 from smartassist.core.service import ConversationService
+from smartassist.core.specialist_policy import default_specialist_policy
 from smartassist.core.specialists import ModelSpecialist, SpecialistRegistry
 from smartassist.domain.errors import SmartAssistError
 from smartassist.domain.models import (
@@ -24,10 +25,13 @@ from smartassist.domain.models import (
     MessageResponse,
 )
 from smartassist.infrastructure.model_provider import (
-    AzureOpenAIModelProvider,
+    SPECIALIST_IDS,
+    SPECIALIST_INSTRUCTIONS,
+    AgentFrameworkModelProvider,
     StubModelProvider,
 )
 from smartassist.infrastructure.repository import InMemoryConversationRepository
+from smartassist.observability import configure_telemetry
 
 
 def _correlation_id(value: UUID | None) -> UUID:
@@ -39,33 +43,36 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application_settings = settings or get_settings()
     repository = InMemoryConversationRepository()
     provider = (
-        AzureOpenAIModelProvider(application_settings)
-        if application_settings.model_provider is ModelProviderMode.AZURE
+        AgentFrameworkModelProvider(application_settings)
+        if application_settings.model_provider is ModelProviderMode.FOUNDRY
         else StubModelProvider()
     )
     registry = SpecialistRegistry()
     registry.register(
         ModelSpecialist(
             Category.BILLING,
-            "billing",
-            "Provide only grounded billing-policy assistance.",
+            SPECIALIST_IDS[Category.BILLING],
+            SPECIALIST_INSTRUCTIONS[Category.BILLING],
             provider,
+            response_policy=default_specialist_policy(Category.BILLING),
         )
     )
     registry.register(
         ModelSpecialist(
             Category.TECH_SUPPORT,
-            "tech-support",
-            "Provide grounded technical troubleshooting with concise next steps.",
+            SPECIALIST_IDS[Category.TECH_SUPPORT],
+            SPECIALIST_INSTRUCTIONS[Category.TECH_SUPPORT],
             provider,
+            response_policy=default_specialist_policy(Category.TECH_SUPPORT),
         )
     )
     registry.register(
         ModelSpecialist(
             Category.GENERAL,
-            "general",
-            "Provide concise assistance for supported general inquiries.",
+            SPECIALIST_IDS[Category.GENERAL],
+            SPECIALIST_INSTRUCTIONS[Category.GENERAL],
             provider,
+            response_policy=default_specialist_policy(Category.GENERAL),
         )
     )
     service = ConversationService(repository, provider, registry, application_settings)
@@ -107,7 +114,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def health() -> HealthResponse:
         return HealthResponse(status="healthy")
 
-    @app.get("/ready", response_model=HealthResponse)
+    @app.get("/ready", response_model=HealthResponse, include_in_schema=False)
+    @app.get("/health/ready", response_model=HealthResponse)
     async def ready() -> HealthResponse:
         return HealthResponse(status="ready")
 
@@ -155,3 +163,4 @@ def _read_correlation_id(request: Request) -> UUID | None:
 
 
 app = create_app()
+configure_telemetry(app)

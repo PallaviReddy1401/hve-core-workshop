@@ -1,0 +1,14 @@
+name: smartassist
+
+infra:
+  provider: bicep
+  path: infra
+
+services:
+  api:
+    project: .
+    host: containerapp
+    language: python
+    docker:
+      path: Dockerfile
+      context: .

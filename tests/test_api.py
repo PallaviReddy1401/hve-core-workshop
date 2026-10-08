@@ -10,6 +10,20 @@ from smartassist.api.app import create_app
 from smartassist.core.config import Settings
 
 
+def test_health_and_readiness_endpoints() -> None:
+    client = TestClient(create_app(Settings()))
+
+    assert client.get("/health").json() == {
+        "status": "healthy",
+        "service": "smartassist",
+    }
+    assert client.get("/health/ready").json() == {
+        "status": "ready",
+        "service": "smartassist",
+    }
+    assert client.get("/ready").status_code == 200
+
+
 def test_create_and_continue_conversation() -> None:
     client = TestClient(create_app(Settings()))
 

@@ -1,0 +1,85 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Validate prerequisites",
+      "type": "aitk",
+      "command": "debug-check-prerequisites",
+      "args": {
+        "portOccupancy": [
+          5679,
+          8000
+        ]
+      }
+    },
+    {
+      "label": "Run SmartAssist Agent API",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "debugpy",
+        "--listen",
+        "127.0.0.1:5679",
+        "-m",
+        "smartassist"
+      ],
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": [
+        "Validate prerequisites"
+      ],
+      "problemMatcher": {
+        "pattern": [
+          {
+            "regexp": "^.*$",
+            "file": 0,
+            "location": 1,
+            "message": 2
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Application startup complete"
+        }
+      }
+    },
+    {
+      "label": "Open Agent Inspector",
+      "type": "shell",
+      "command": "echo '${input:openAgentInspector}'",
+      "presentation": {
+        "reveal": "never"
+      },
+      "dependsOn": [
+        "Run SmartAssist Agent API"
+      ]
+    },
+    {
+      "label": "Terminate All Tasks",
+      "command": "echo ${input:terminate}",
+      "type": "shell",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "openAgentInspector",
+      "type": "command",
+      "command": "ai-mlstudio.openTestTool",
+      "args": {
+        "triggeredFrom": "tasks",
+        "port": 8000
+      }
+    },
+    {
+      "id": "terminate",
+      "type": "command",
+      "command": "workbench.action.tasks.terminate",
+      "args": "terminateAll"
+    }
+  ]
+}

@@ -13,7 +13,7 @@ class ModelProviderMode(StrEnum):
     """Available model provider modes."""
 
     STUB = "stub"
-    AZURE = "azure"
+    FOUNDRY = "foundry"
 
 
 class Settings(BaseSettings):
@@ -29,25 +29,32 @@ class Settings(BaseSettings):
     session_ttl_seconds: int = Field(default=1800, ge=60, le=86400)
     max_message_length: int = Field(default=4000, ge=1, le=32000)
     routing_minimum_confidence: float = Field(default=0.7, ge=0, le=1)
+    foundry_project_endpoint: str | None = None
+    foundry_model_deployment_name: str | None = None
     azure_openai_endpoint: str | None = None
     azure_openai_deployment: str | None = None
     azure_openai_api_version: str = "2024-10-21"
     azure_openai_api_key: str | None = None
 
     @model_validator(mode="after")
-    def validate_azure_configuration(self) -> Settings:
-        """Require endpoint and deployment when Azure mode is selected."""
-        if self.model_provider is ModelProviderMode.AZURE:
+    def validate_foundry_configuration(self) -> Settings:
+        """Require project endpoint and model when Foundry mode is selected."""
+        if self.model_provider is ModelProviderMode.FOUNDRY:
             missing = [
                 name
                 for name, value in (
-                    ("azure_openai_endpoint", self.azure_openai_endpoint),
-                    ("azure_openai_deployment", self.azure_openai_deployment),
+                    ("foundry_project_endpoint", self.foundry_project_endpoint),
+                    (
+                        "foundry_model_deployment_name",
+                        self.foundry_model_deployment_name,
+                    ),
                 )
                 if not value
             ]
             if missing:
-                raise ValueError(f"Azure model provider requires: {', '.join(missing)}")
+                raise ValueError(
+                    f"Foundry model provider requires: {', '.join(missing)}"
+                )
         return self
 
 

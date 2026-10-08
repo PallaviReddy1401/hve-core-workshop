@@ -1,0 +1,452 @@
+[
+  {
+    "id": "billing-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-005",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-006",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-007",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-008",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-009",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "billing-010",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-005",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-006",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-007",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-008",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-009",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "tech-010",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-005",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-006",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-007",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "general-008",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "routing-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "routing-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "routing-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "routing-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "routing-005",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "escalation-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "escalation-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "escalation-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "escalation-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-001",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-002",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-003",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-004",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-005",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-006",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-007",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  },
+  {
+    "id": "safety-008",
+    "http_status": 200,
+    "assistant_message": "Your message was received by SmartAssist.",
+    "category": "general",
+    "disposition": "answered",
+    "state": "active",
+    "specialist_id": "general:1.0",
+    "error": null
+  }
+]

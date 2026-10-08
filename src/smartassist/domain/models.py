@@ -53,6 +53,18 @@ class RoutingOutcome(StrEnum):
     ESCALATE = "escalate"
 
 
+class SpecialistScope(StrEnum):
+    """Structured specialist policy assessment used by deterministic gates."""
+
+    SUPPORTED = "supported"
+    NEEDS_CLARIFICATION = "needs_clarification"
+    ACCOUNT_SPECIFIC = "account_specific"
+    RESTRICTED_OPERATION = "restricted_operation"
+    UNSUPPORTED = "unsupported"
+    UNSAFE = "unsafe"
+    UNCERTAIN = "uncertain"
+
+
 class DataClassification(StrEnum):
     """Data classifications accepted by the controlled MVP."""
 
@@ -188,6 +200,7 @@ class SpecialistResponse(BaseModel):
     specialist_version: str = Field(min_length=1, max_length=64)
     content: str = Field(min_length=1)
     disposition: Disposition
+    policy_scope: SpecialistScope = SpecialistScope.SUPPORTED
     evidence_references: list[str] = Field(default_factory=list)
     escalation_reason: str | None = Field(default=None, max_length=256)
     prompt_version: str = Field(min_length=1, max_length=64)

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Protocol
 
+from smartassist.core.specialist_policy import SpecialistResponsePolicy
 from smartassist.domain.models import Category, SpecialistRequest, SpecialistResponse
 
 SPECIALIST_CONTRACT_VERSION = "1.0"
@@ -48,6 +49,7 @@ class ModelSpecialist:
         *,
         specialist_version: str = "1.0",
         prompt_version: str = "1.0",
+        response_policy: SpecialistResponsePolicy | None = None,
     ) -> None:
         self.category = category
         self.specialist_id = specialist_id
@@ -55,6 +57,7 @@ class ModelSpecialist:
         self._instructions = instructions
         self._provider = provider
         self._prompt_version = prompt_version
+        self._response_policy = response_policy
 
     async def handle(self, request: SpecialistRequest) -> SpecialistResponse:
         """Validate the request contract and return a validated response."""
@@ -67,8 +70,11 @@ class ModelSpecialist:
                 f"Specialist '{self.specialist_id}' does not support "
                 f"'{request.category.value}'."
             )
+        prepared_request = (
+            self._response_policy.prepare(request) if self._response_policy else request
+        )
         response = await self._provider.respond(
-            request,
+            prepared_request,
             specialist_id=self.specialist_id,
             specialist_version=self.specialist_version,
             instructions=self._instructions,
@@ -78,6 +84,16 @@ class ModelSpecialist:
             raise ValueError(
                 f"Unsupported specialist response version: {response.contract_version}"
             )
+        if response.specialist_id != self.specialist_id:
+            raise ValueError(
+                f"Unexpected specialist response identity: {response.specialist_id}"
+            )
+        if response.specialist_version != self.specialist_version:
+            raise ValueError(
+                f"Unexpected specialist response version: {response.specialist_version}"
+            )
+        if self._response_policy:
+            response = self._response_policy.enforce(response)
         return response
 
 

@@ -8,15 +8,19 @@ version = "0.1.0"
 description = "SmartAssist customer support conversation service"
 requires-python = ">=3.11"
 dependencies = [
+  "agent-framework>=1.19,<2",
   "azure-identity>=1.19,<2",
+  "azure-monitor-opentelemetry>=1.6,<2",
   "fastapi>=0.115,<1",
   "openai>=1.65,<3",
+  "opentelemetry-instrumentation-fastapi>=0.50b0,<1",
   "pydantic-settings>=2.7,<3",
   "uvicorn[standard]>=0.34,<1",
 ]
 
 [project.optional-dependencies]
 dev = [
+  "debugpy>=1.8,<2",
   "httpx>=0.28,<1",
   "pytest>=8.3,<10",
   "pytest-asyncio>=0.25,<2",
@@ -29,7 +33,7 @@ packages = ["src/smartassist"]
 [tool.pytest.ini_options]
 addopts = "-q"
 asyncio_mode = "auto"
-pythonpath = ["src"]
+pythonpath = [".", "src"]
 testpaths = ["tests"]
 
 [tool.ruff]
@@ -38,4 +42,3 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "ASYNC"]
-
